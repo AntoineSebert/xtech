@@ -14,6 +14,10 @@ express()
 	.set('views', path.join(__dirname, 'views'))
 	.set('view engine', 'ejs')
 	.get('/', (req, res) => res.render('pages/index'))
+	.get('/account', (req, res) => res.render('pages/account'))
+	.get('/sign', (req, res) => res.render('pages/sign'))
+	/*.post('/singin' => singin) */
+	/*.post('/singup' => singup) */
 	.get('/db', async (req, res) => {
 		try {
 			const client = await pool.connect();
