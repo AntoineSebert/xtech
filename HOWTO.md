@@ -10,6 +10,10 @@
 
 - start console : `heroku run bash`
 
+- troubleshot :
+    * https://devcenter.heroku.com/articles/troubleshooting-node-deploys
+    * https://devcenter.heroku.com/articles/node-memory-use
+
 ## Sources
 
 - https://devcenter.heroku.com/articles/getting-started-with-nodejs
