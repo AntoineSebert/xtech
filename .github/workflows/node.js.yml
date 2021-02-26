@@ -39,17 +39,15 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     
-  lighthouseci:
+  
+  lighthouse:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v7
         with:
-          node-version: 15.x
-      - run: npm ci
-      - name: run Lighthouse CI
-        run: |
-          npm install -g @lhci/cli@0.7.x
-          lhci autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          urls: |
+            https://xtech-42634.herokuapp.com/
+          uploadArtifacts: true # save results as an action artifacts
+          configPath: '.lighthouserc.js'
