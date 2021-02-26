@@ -1,17 +1,17 @@
-const express = require('express')
-const Sentry = require('@sentry/node')
-const Tracing = require('@sentry/tracing')
-const path = require('path')
-const PORT = process.env.PORT || 5000
-const { Pool } = require('pg')
+const express = require("express");
+const Sentry = require("@sentry/node");
+const Tracing = require("@sentry/tracing");
+const path = require("path");
+const PORT = process.env.PORT || 5000;
+const { Pool } = require("pg");
 const pool = new Pool({
 	connectionString: process.env.DATABASE_URL,
 	ssl: {
 		rejectUnauthorized: false,
 	},
-})
+});
 
-const app = express()
+const app = express();
 
 Sentry.init({
 	dsn: process.env.SENTRY_DSN,
@@ -25,35 +25,35 @@ Sentry.init({
 	// We recommend adjusting this value in production, or using tracesSampler
 	// for finer control
 	tracesSampleRate: 1.0,
-})
+});
 
 // RequestHandler creates a separate execution context using domains, so that every
 // transaction/span/breadcrumb is attached to its own Hub instance
-app.use(Sentry.Handlers.requestHandler())
+app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
-app.use(Sentry.Handlers.tracingHandler())
+app.use(Sentry.Handlers.tracingHandler());
 
-app.use(express.static(path.join(__dirname, 'public')))
-	.set('views', path.join(__dirname, 'views'))
-	.set('view engine', 'ejs')
-	.get('/', (req, res) => res.render('pages/index'))
-	.get('/account', (req, res) => res.render('pages/account'))
-	.get('/sign', (req, res) => res.render('pages/sign'))
+app.use(express.static(path.join(__dirname, "public")))
+	.set("views", path.join(__dirname, "views"))
+	.set("view engine", "ejs")
+	.get("/", (req, res) => res.render("pages/index"))
+	.get("/account", (req, res) => res.render("pages/account"))
+	.get("/sign", (req, res) => res.render("pages/sign"))
 	/*.post('/singin' => singin) */
 	/*.post('/singup' => singup) */
-	.get('/db', async (req, res) => {
+	.get("/db", async (req, res) => {
 		try {
-			const client = await pool.connect()
-			const result = await client.query('SELECT * FROM test_table')
-			const results = { results: result ? result.rows : null }
-			res.render('pages/db', results)
-			client.release()
+			const client = await pool.connect();
+			const result = await client.query("SELECT * FROM test_table");
+			const results = { results: result ? result.rows : null };
+			res.render("pages/db", results);
+			client.release();
 		} catch (err) {
-			console.error(err)
-			res.send('Error ' + err)
+			console.error(err);
+			res.send("Error " + err);
 		}
-	})
+	});
 
 // The error handler must be before any other error middleware and after all controllers
-app.use(Sentry.Handlers.errorHandler())
-app.listen(PORT, () => console.log(`Listening on ${PORT}`))
+app.use(Sentry.Handlers.errorHandler());
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
