@@ -2,7 +2,7 @@ module.exports = {
 	ci: {
 		upload: {
 			"target": "filesystem",
-			"outputDir": ".lighthouse",
+			"outputDir": "lighthouse",
 		},
 	},
 };
