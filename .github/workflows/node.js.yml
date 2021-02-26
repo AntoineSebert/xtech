@@ -50,4 +50,4 @@ jobs:
           urls: |
             https://xtech-42634.herokuapp.com/
           uploadArtifacts: true # save results as an action artifacts
-          configPath: '.lighthouserc.js'
+          configPath: 'lighthouserc.js'
