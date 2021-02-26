@@ -57,3 +57,17 @@
 
 - https://expressjs.com/en/starter/examples.html
 - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs
+
+## Monitor
+
+- errors : https://sentry.io/organizations/xtech-42634/issues/?project=5651105
+- live testing : https://live.browserstack.com/dashboard
+- speed :
+  - https://www.browserstack.com/speedlab
+  - https://developers.google.com/speed
+- responsive : https://www.browserstack.com/responsive
+- size : https://www.webbloatscore.com/
+- various :
+  - https://web.dev/measure/
+  - `lighthouse https://xtech-42634.herokuapp.com/`
+
