@@ -40,14 +40,14 @@ jobs:
     - run: npm test
     
   
-  lighthouse:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Audit URLs using Lighthouse
-        uses: treosh/lighthouse-ci-action@v7
-        with:
-          urls: |
-            https://xtech-42634.herokuapp.com/
-          uploadArtifacts: true # save results as an action artifacts
-          configPath: 'lighthouserc.js'
+#  lighthouse:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Audit URLs using Lighthouse
+#        uses: treosh/lighthouse-ci-action@v7
+#        with:
+#          urls: |
+#            https://xtech-42634.herokuapp.com/
+#          uploadArtifacts: true # save results as an action artifacts
+#          configPath: 'lighthouserc.js'
