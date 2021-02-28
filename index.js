@@ -24,6 +24,7 @@ const config = {
 };
 
 const app = express();
+var router = express.Router();
 
 Sentry.init({
 	dsn: process.env.SENTRY_DSN,
@@ -45,16 +46,15 @@ app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
 app.use(Sentry.Handlers.tracingHandler());
 
+app.use(auth(config));
+
 app.use(express.static(path.join(__dirname, "public")))
-	.use(auth(config))
 	.set("views", path.join(__dirname, "views"))
 	.set("view engine", "ejs")
 	//.get("/", (req, res) => res.render("pages/index"))
 	.get('/', (req, res) => { res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');})
 	.get("/account", (req, res) => res.render("pages/account"))
 	.get("/sign", (req, res) => res.render("pages/sign"))
-	/*.post('/singin' => singin) */
-	/*.post('/singup' => singup) */
 	.get("/db", async (req, res) => {
 		try {
 			const client = await pool.connect();
