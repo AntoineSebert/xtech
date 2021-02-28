@@ -17,7 +17,7 @@ const { auth } = require('express-openid-connect');
 const config = {
 	authRequired: false,
 	auth0Logout: true,
-	secret: process.env.AUTH0_SECRET,
+	secret: process.env.AUTH0_CLIENT_SECRET,
 	baseURL: 'https://xtech-42634.herokuapp.com',
 	clientID: 'FIRvLYT62j27mZRORp2gK7o4AWVie8MY',
 	issuerBaseURL: 'https://tight-sun-4633.eu.auth0.com'
