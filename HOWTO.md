@@ -60,6 +60,7 @@
 
 ## Monitor
 
+- auth : https://manage.auth0.com/dashboard/eu/tight-sun-4633/
 - errors : https://sentry.io/organizations/xtech-42634/issues/?project=5651105
 - live testing : https://live.browserstack.com/dashboard
 - speed :
@@ -67,6 +68,7 @@
   - https://developers.google.com/speed
 - responsive : https://www.browserstack.com/responsive
 - size : https://www.webbloatscore.com/
+- logs : https://my.papertrailapp.com/systems/xtech-42634/events
 - various :
   - https://web.dev/measure/
   - `lighthouse https://xtech-42634.herokuapp.com/`
