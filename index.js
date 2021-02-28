@@ -3,6 +3,7 @@ const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
+
 const { Pool } = require("pg");
 const pool = new Pool({
 	connectionString: process.env.DATABASE_URL,
@@ -10,6 +11,17 @@ const pool = new Pool({
 		rejectUnauthorized: false,
 	},
 });
+
+const { auth } = require('express-openid-connect');
+
+const config = {
+	authRequired: false,
+	auth0Logout: true,
+	secret: process.env.AUTH0_SECRET,
+	baseURL: 'https://xtech-42634.herokuapp.com',
+	clientID: 'FIRvLYT62j27mZRORp2gK7o4AWVie8MY',
+	issuerBaseURL: 'https://tight-sun-4633.eu.auth0.com'
+};
 
 const app = express();
 
@@ -34,9 +46,11 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 
 app.use(express.static(path.join(__dirname, "public")))
+	.use(auth(config))
 	.set("views", path.join(__dirname, "views"))
 	.set("view engine", "ejs")
-	.get("/", (req, res) => res.render("pages/index"))
+	//.get("/", (req, res) => res.render("pages/index"))
+	.get('/', (req, res) => { res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');})
 	.get("/account", (req, res) => res.render("pages/account"))
 	.get("/sign", (req, res) => res.render("pages/sign"))
 	/*.post('/singin' => singin) */
