@@ -10,18 +10,26 @@ Ordered by descending priority.
 - one or more features ?
 - how would that work (typical scenario) ?
 
-## 2. tech environment
+```
+now
 
-> Knowing more about the tools people are working with will allow us to optimize the application
+- ground team
+- collect data
+- write it on google forms
+- upload
+- come back
 
-- browser (+version)
-- typical terminal specs (CPU, RAM)
-- bandwidth at kitchen (min/max)
-- expected number of concurrent connections
-- existing base of users ?
-- user data model (name ? birthdate ? gender ? phone number ?)
+cooking by batches
+hand thermometers
+```
 
-## 3. branding
+```
+ideally
+
+- direct upload from kitchen to system through webapp
+```
+
+## 2. branding
 
 > With these elements we can adjust the interface to your organization and project
 
@@ -33,22 +41,35 @@ Ordered by descending priority.
 - generic keywords to describe UI
 - presentation NGO (short and long)
 
-## 4. feature 4
+```
+we will receive them soon
+```
+
+## 3. feature 4
 
 > How would you like the documents (policy guidelines, safety mandates) on the platform to be accessible and added/modified ?
 
 - how to upload them ?
 - how to consult them ?  html page ? integrated pdf viewer ?
 
-## 5. data
+## 4. data
 
-> We need to build models of the components of the system, depending of your needs and constraints
+> We need to build models of the components of the system, depending on your needs and constraints
 
 - get samples (ingredients, recipes, feedback, users)
-- integration with current database ?
+- integration with potential current database ?
 - database migration ?
 
-## 6. hosting
+```
+community kitchens
+- single database
+- migration with IT team
+
+food composition table
+- nutrients
+```
+
+## 5. hosting
 
 > We can help you with the deployment to production from the beginning of the project
 
@@ -57,16 +78,20 @@ Ordered by descending priority.
 - rollback/saves
 - scaling ?
 
-## 7. legal mentions
+## 6. legal mentions
 
 > In many countries, a section dedicated to legal mentions must be available. We can use as a base this section on your existing website
 
 - what do we need to include ?
 
-## 8. notifications
+## 7. notifications
 
 > Do you want to include any notification system ? for which feature ?
 
 - mail ?
 - phone ?
 - push notifications ?
+
+```
+- kitchen alerts on food condition
+```

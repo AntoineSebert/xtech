@@ -24,8 +24,6 @@
 
 ### Expressjs
 
-- authentication : https://github.com/expressjs/express/tree/master/examples/auth
-
 - transfer files to user : https://github.com/expressjs/express/tree/master/examples/downloads
 
 - error :
