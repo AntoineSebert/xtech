@@ -12,7 +12,9 @@ const pool = new Pool({
 	},
 });
 
-const { auth } = require('express-openid-connect');
+const { body } = require('express-validator');
+
+const { auth, requiresAuth } = require('express-openid-connect');
 
 const config = {
 	authRequired: false,
@@ -24,7 +26,9 @@ const config = {
 };
 
 const app = express();
-var router = express.Router();
+const router = express.Router();
+
+const feedback_controller = require('./controllers/feedback');
 
 Sentry.init({
 	dsn: process.env.SENTRY_DSN,
@@ -50,11 +54,22 @@ app.use(auth(config));
 
 app.use(express.static(path.join(__dirname, "public")))
 	.set("views", path.join(__dirname, "views"))
-	.set("view engine", "ejs")
-	//.get("/", (req, res) => res.render("pages/index"))
-	.get('/', (req, res) => { res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');})
-	.get("/account", (req, res) => res.render("pages/account"))
-	.get("/sign", (req, res) => res.render("pages/sign"))
+	.set("view engine", "ejs");
+
+router//.get("/", (req, res) => res.render("pages/index"))
+	.get('/', (req, res) => {
+		res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+	})
+	.get("/account", requiresAuth(), (req, res) => {
+		res.send(JSON.stringify(req.oidc.user));
+	})
+	.get("/feedback", feedback_controller.get_feedback)
+	.post('/feedback',
+		body('location').trim(),
+		body('content').trim().isLength({ min: 1 }).withMessage('Feedback empty.'),
+		feedback_controller.post_feedback
+	)
+	.get("/dashboard", requiresAuth(), (req, res) => res.render("pages/dashboard"))
 	.get("/db", async (req, res) => {
 		try {
 			const client = await pool.connect();
@@ -67,6 +82,8 @@ app.use(express.static(path.join(__dirname, "public")))
 			res.send("Error " + err);
 		}
 	});
+
+app.use(router);
 
 // The error handler must be before any other error middleware and after all controllers
 app.use(Sentry.Handlers.errorHandler());
