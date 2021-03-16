@@ -12,8 +12,6 @@ const pool = new Pool({
 	},
 });
 
-const { body } = require('express-validator');
-
 const { auth, requiresAuth } = require('express-openid-connect');
 
 const config = {
@@ -29,6 +27,7 @@ const app = express();
 const router = express.Router();
 
 const feedback_controller = require('./controllers/feedback');
+const bodyParser = require('body-parser');
 
 Sentry.init({
 	dsn: process.env.SENTRY_DSN,
@@ -52,6 +51,10 @@ app.use(Sentry.Handlers.tracingHandler());
 
 app.use(auth(config));
 
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+
 app.use(express.static(path.join(__dirname, "public")))
 	.set("views", path.join(__dirname, "views"))
 	.set("view engine", "ejs");
@@ -64,11 +67,7 @@ router//.get("/", (req, res) => res.render("pages/index"))
 		res.send(JSON.stringify(req.oidc.user));
 	})
 	.get("/feedback", feedback_controller.get_feedback)
-	.post('/feedback',
-		body('location').trim(),
-		body('content').trim().isLength({ min: 1 }).withMessage('Feedback empty.'),
-		feedback_controller.post_feedback
-	)
+	.post('/feedback', feedback_controller.post_feedback)
 	.get("/dashboard", requiresAuth(), (req, res) => res.render("pages/dashboard"))
 	.get("/db", async (req, res) => {
 		try {
