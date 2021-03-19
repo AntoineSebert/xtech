@@ -18,7 +18,7 @@ exports.post_feedback = [
 		if (errors.isEmpty()) {
 			try {
 				db.QueryVoid(
-					"INSERT INTO feedback VALUES(" + gen_random_uuid() + ", " + now() + ", " + req.body.content + ")")
+					"INSERT INTO feedback VALUES(gen_random_uuid(), now(), " + req.body.content + ")")
 					.then(() => res.render("pages/index")); // replace by success
 			} catch (err) {
 				console.error(err);
