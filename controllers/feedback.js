@@ -15,21 +15,16 @@ exports.post_feedback = [
 
 		const errors = validationResult(req);
 
-		if (errors.isEmpty()) {
+		if (errors.isEmpty())
 			try {
 				db.QueryVoid(
-					"INSERT INTO feedback VALUES(gen_random_uuid(), now(), " + req.body.content + ")")
+					"INSERT INTO feedback VALUES(gen_random_uuid(), now(), " + req.body.feedback + ")")
 					.then(() => res.render("pages/index")); // replace by success
 			} catch (err) {
-				console.error(err);
 				// replace by status code 5xx
 				res.render("pages/feedback", { s_auth: req.oidc.isAuthenticated(), errors: [{msg: err}] });
 			}
-		} else {
-			// There are errors. Render form again with sanitized values/errors messages.
-			// Error messages can be returned in an array using `errors.array()`.
-			console.error(errors.array());
+		else
 			res.render("pages/feedback", { is_auth: req.oidc.isAuthenticated(), errors: errors.array() });
-		}
 	}
 ];
