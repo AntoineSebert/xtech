@@ -13,7 +13,6 @@ exports.post_feedback = [
 	(req, res) => {
 		// check has sent feedback recently
 
-		// Extract the validation errors from a request.
 		const errors = validationResult(req);
 
 		if (errors.isEmpty()) {
