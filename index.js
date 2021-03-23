@@ -60,7 +60,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 router//.get("/", (req, res) => res.render("pages/index"))
 	.get('/', (req, res) => {
-		res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+		res.render("pages/index");
 	})
 	.get("/account", requiresAuth(), (req, res) => {
 		res.send(JSON.stringify(req.oidc.user));
