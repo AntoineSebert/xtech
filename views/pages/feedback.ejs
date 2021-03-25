@@ -13,22 +13,18 @@ if (typeof is_auth == 'object') {
 <%  }
 } else { %>
     <form action="/feedback" method="post">
-        <%%>
-        <fieldset disabled="disabled">
-
-            <label for="location">Location (optional)</label><br>
-            <input type="text" id="location" name="location">
-            <br>
-            <label for="feedback">Your feedback</label><br>
-            <textarea
-                    id="feedback" name="feedback"
-                    rows="4" cols="50"
-                    spellcheck=true
-                    minlength=1 maxlength='4096'
-                    required></textarea>
-            <br>
-            <input type="submit" value="Submit">
-        </fieldset>
+        <label for="location">Location (optional)</label><br>
+        <input type="text" id="location" name="location">
+        <br>
+        <label for="feedback">Your feedback</label><br>
+        <textarea
+            id="feedback" name="feedback"
+            rows="4" cols="50"
+            spellcheck=true
+            minlength=1 maxlength='4096'
+            required></textarea>
+        <br>
+        <input type="submit" value="Submit">
     </form>
 <% } %>
 

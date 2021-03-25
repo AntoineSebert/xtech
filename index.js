@@ -48,25 +48,24 @@ Sentry.init({
 app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
 app.use(Sentry.Handlers.tracingHandler());
-
+// The error handler must be before any other error middleware and after all controllers
+app.use(Sentry.Handlers.errorHandler());
 app.use(auth(config));
-
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-
 app.use(express.static(path.join(__dirname, "public")))
 	.set("views", path.join(__dirname, "views"))
 	.set("view engine", "ejs");
 
 router//.get("/", (req, res) => res.render("pages/index"))
 	.get('/', (req, res) => {
-		res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+		res.render("pages/index");
 	})
 	.get("/account", requiresAuth(), (req, res) => {
 		res.send(JSON.stringify(req.oidc.user));
 	})
-	.get("/feedback", feedback_controller.get_feedback)
+	.get('/feedback', feedback_controller.get_feedback)
 	.post('/feedback', feedback_controller.post_feedback)
 	.get("/dashboard", requiresAuth(), (req, res) => res.render("pages/dashboard"))
 	.get("/db", async (req, res) => {
@@ -84,6 +83,4 @@ router//.get("/", (req, res) => res.render("pages/index"))
 
 app.use(router);
 
-// The error handler must be before any other error middleware and after all controllers
-app.use(Sentry.Handlers.errorHandler());
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
