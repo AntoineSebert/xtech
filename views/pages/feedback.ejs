@@ -8,13 +8,61 @@
 <body>
 <%
 if (typeof is_auth == 'object') {
-    if (is_auth) { %>
-    <h2>retrieve feedback</h2>
-<%  }
+    if (is_auth) {
+    	if (typeof results == 'object') { %>
+            <h2>Unreviewed feedback</h2>
+            <ul>
+                <% results.forEach(function(r) { %>
+                <li><%= r.time %> - <%= r.content %></li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+                <p>No unreviewed feedback</p>
+        <% }
+    }
 } else { %>
     <form action="/feedback" method="post">
-        <label for="location">Location (optional)</label><br>
-        <input type="text" id="location" name="location">
+        <label for="location">Location</label><br>
+        <!-- replace by db query & loop -->
+        <select id="location" name="location" required>
+            <option value="">Select State/UTs</option>
+            <option value="andaman_and_nicobar_island">Andaman and Nicobar Islands</option>
+            <option value="andhra_pradesh">Andhra Pradesh</option>
+            <option value="arunachal_pradesh">Arunachal Pradesh</option>
+            <option value="assam">Assam</option>
+            <option value="5">Bihar</option>
+            <option value="6">Chandigarh</option>
+            <option value="7">Chhattisgarh</option>
+            <option value="8">Dadra Nagar &amp; Haveli</option>
+            <option value="9">Daman &amp; Diu</option>
+            <option value="10">Delhi</option>
+            <option value="11">Goa</option>
+            <option value="12">Gujarat</option>
+            <option value="13">Haryana</option>
+            <option value="14">Himachal Pradesh</option>
+            <option value="15">Jammu &amp; Kashmir</option>
+            <option value="16">Jharkhand</option>
+            <option value="17">Karnataka</option>
+            <option value="18">Kerala</option>
+            <option value="19">Lakshadweep</option>
+            <option value="20">Madhya Pradesh</option>
+            <option value="21">Maharashtra</option>
+            <option value="22">Manipur</option>
+            <option value="23">Meghalaya</option>
+            <option value="24">Mizoram</option>
+            <option value="25">Nagaland</option>
+            <option value="26">Odisha</option>
+            <option value="27">Puducherry</option>
+            <option value="28">Punjab</option>
+            <option value="29">Rajasthan</option>
+            <option value="30">Sikkim</option>
+            <option value="31">Tamil Nadu</option>
+            <option value="32">Telengana</option>
+            <option value="33">Tripura</option>
+            <option value="34">Uttar Pradesh</option>
+            <option value="35">Uttarakhand</option>
+            <option value="36">West Bengal</option>
+        </select>
         <br>
         <label for="feedback">Your feedback</label><br>
         <textarea
