@@ -4,21 +4,22 @@ var session = require('express-session');
 const db = require('../lib/db');
 
 exports.get_feedback = function(req, res) {
-	if(req.oidc.isAuthenticated())
+	const isAuth = req.oidc.isAuthenticated();
+
+	if(isAuth)
 		try {
 			const results = db.QueryResult('SELECT * FROM feedback WHERE NOT reviewed');
-			res.render('pages/feedback', { results: results, is_auth: req.oidc.isAuthenticated() });
+			res.render('pages/feedback', { is_auth: isAuth, results: results });
 		} catch (err) {
-			console.error(err);
-			res.render("pages/feedback", { s_auth: req.oidc.isAuthenticated(), errors: [{msg: err}] });
+			res.render("pages/feedback", { is_auth: isAuth, errors: [db.err_msg] });
 		}
 	else
-		res.render("pages/feedback", {is_auth: req.oidc.isAuthenticated()});
+		res.render("pages/feedback", { is_auth: isAuth });
 };
 
 exports.post_feedback = [
-	body('location').trim(),
-	body('feedback').trim().isLength({ min: 1 }).withMessage('Feedback empty.').escape(), // maxlength 4096
+	body('location').trim().isLength({ min: 1 }).withMessage('Location empty.').escape(), // maxlength 128
+	body('content').trim().isLength({ min: 1 }).withMessage('Feedback content empty.').escape(), // maxlength 4096
 	(req, res) => {
 		// check has sent feedback recently
 
@@ -27,11 +28,11 @@ exports.post_feedback = [
 		if (errors.isEmpty())
 			try {
 				db.QueryVoid(
-					"INSERT INTO feedback (id, time, content, reviewed) VALUES(DEFAULT, DEFAULT, '" + req.body.feedback + "', DEFAULT)")
-					.then(() => res.render("pages/index")); // replace by success
+					`INSERT INTO feedback (id, time, content, location, reviewed)
+						VALUES(DEFAULT, DEFAULT, '${req.body.content}', '${req.body.location}', DEFAULT)`
+				).then(() => res.redirect("pages/index")); // replace by success
 			} catch (err) {
-				// replace by status code 5xx
-				res.render("pages/feedback", { s_auth: req.oidc.isAuthenticated(), errors: [{msg: err}] });
+				res.render("pages/feedback", { s_auth: req.oidc.isAuthenticated(), errors: [db.err_msg] });
 			}
 		else
 			res.render("pages/feedback", { is_auth: req.oidc.isAuthenticated(), errors: errors.array() });
