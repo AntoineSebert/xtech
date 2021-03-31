@@ -4,14 +4,6 @@ const Tracing = require("@sentry/tracing");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
 
-const { Pool } = require("pg");
-const pool = new Pool({
-	connectionString: process.env.DATABASE_URL,
-	ssl: {
-		rejectUnauthorized: false,
-	},
-});
-
 const { auth, requiresAuth } = require('express-openid-connect');
 
 const config = {
@@ -38,13 +30,12 @@ Sentry.init({
 		new Tracing.Integrations.Express({ app }),
 	],
 
-	// We recommend adjusting this value in production, or using tracesSampler
-	// for finer control
+	// We recommend adjusting this value in production, or using tracesSampler for finer control
 	tracesSampleRate: 1.0,
 });
 
-// RequestHandler creates a separate execution context using domains, so that every
-// transaction/span/breadcrumb is attached to its own Hub instance
+// RequestHandler creates a separate execution context using domains, so that every transaction/span/breadcrumb is
+// attached to its own Hub instance
 app.use(Sentry.Handlers.requestHandler());
 // TracingHandler creates a trace for every incoming request
 app.use(Sentry.Handlers.tracingHandler());
@@ -58,28 +49,14 @@ app.use(express.static(path.join(__dirname, "public")))
 	.set("views", path.join(__dirname, "views"))
 	.set("view engine", "ejs");
 
-router//.get("/", (req, res) => res.render("pages/index"))
-	.get('/', (req, res) => {
-		res.render("pages/index");
-	})
+router
+	.get('/', (req, res) => res.render("pages/index"))
 	.get("/account", requiresAuth(), (req, res) => {
 		res.send(JSON.stringify(req.oidc.user));
 	})
 	.get('/feedback', feedback_controller.get_feedback)
 	.post('/feedback', feedback_controller.post_feedback)
-	.get("/dashboard", requiresAuth(), (req, res) => res.render("pages/dashboard"))
-	.get("/db", async (req, res) => {
-		try {
-			const client = await pool.connect();
-			const result = await client.query("SELECT * FROM test_table");
-			const results = { results: result ? result.rows : null };
-			res.render("pages/db", results);
-			client.release();
-		} catch (err) {
-			console.error(err);
-			res.send("Error " + err);
-		}
-	});
+	.get("/dashboard", requiresAuth(), (req, res) => res.render("pages/dashboard"));
 
 app.use(router);
 
