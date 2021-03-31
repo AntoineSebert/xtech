@@ -7,33 +7,69 @@ exports.get_feedback = function(req, res) {
 	const isAuth = req.oidc.isAuthenticated();
 
 	if(isAuth)
-		try {
-			const results = db.QueryResult('SELECT * FROM feedback WHERE NOT reviewed');
-			res.render('pages/feedback', { is_auth: isAuth, results: results });
-		} catch (err) {
-			res.render("pages/feedback", { is_auth: isAuth, errors: [db.err_msg] });
-		}
+		db.pool.connect()
+			.then(client => {
+				return client
+					.query("SELECT * FROM feedback WHERE NOT reviewed ORDER BY time DESC")
+					.then(unreviewed => {
+						client.release();
+						res.render("pages/feedback", { isAuth: isAuth, unreviewed: unreviewed });
+					})
+					.catch(err => {
+						client.release();
+						console.log(err.stack);
+						res.render("pages/feedback", { isAuth: isAuth, errors: [db.err_msg] });
+					});
+			});
 	else
-		res.render("pages/feedback", { is_auth: isAuth });
+		db.pool.connect()
+			.then(client => {
+				return client
+					.query("SELECT * FROM locations ORDER BY name")
+					.then(locations => {
+						client.release();
+						res.render("pages/feedback", { isAuth: isAuth, locations: locations });
+					})
+					.catch(err => {
+						client.release();
+						console.log(err.stack);
+						res.render("pages/feedback", { isAuth: isAuth, errors: [db.err_msg] });
+					});
+			});
 };
 
 exports.post_feedback = [
-	body('location').trim().isLength({ min: 1 }).withMessage('Location empty.').escape(), // maxlength 128
-	body('content').trim().isLength({ min: 1 }).withMessage('Feedback content empty.').escape(), // maxlength 4096
+	body('location')
+		.trim()
+		.isLength({ min: 1, max: 128 })
+		.withMessage('Location empty.')
+		.escape(),
+	body('content')
+		.trim()
+		.isLength({ min: 1, max: 4096 })
+		.withMessage('Feedback content empty.')
+		.escape(),
 	(req, res) => {
 		// check has sent feedback recently
 
 		const errors = validationResult(req);
 
 		if (errors.isEmpty())
-			try {
-				db.QueryVoid(
-					`INSERT INTO feedback (id, time, content, location, reviewed)
-						VALUES(DEFAULT, DEFAULT, '${req.body.content}', '${req.body.location}', DEFAULT)`
-				).then(() => res.redirect("pages/index")); // replace by success
-			} catch (err) {
-				res.render("pages/feedback", { s_auth: req.oidc.isAuthenticated(), errors: [db.err_msg] });
-			}
+			db.pool.connect()
+				.then(client => {
+					return client
+						.query(`INSERT INTO feedback (id, time, content, location, reviewed)
+						VALUES(DEFAULT, DEFAULT, '${req.body.content}', '${req.body.location}', DEFAULT)`)
+						.then(res => {
+							client.release();
+							res.redirect("pages/index");
+						})
+						.catch(err => {
+							client.release();
+							console.log(err.stack);
+							res.render("pages/feedback", { s_auth: req.oidc.isAuthenticated(), errors: [db.err_msg] });
+						});
+				});
 		else
 			res.render("pages/feedback", { is_auth: req.oidc.isAuthenticated(), errors: errors.array() });
 	}
