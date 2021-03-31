@@ -10,7 +10,7 @@ const config = {
 	authRequired: false,
 	auth0Logout: true,
 	secret: process.env.AUTH0_CLIENT_SECRET,
-	baseURL: 'https://xtech-42634.herokuapp.com',
+	baseURL: process.env.BASE_URL,
 	clientID: '1oLhWuzk6bIIDpmsrXIHjPN5FNPIBikW',
 	issuerBaseURL: 'https://tight-sun-4633.eu.auth0.com'
 };
