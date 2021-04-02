@@ -12,11 +12,11 @@
 <% if (typeof isAuth != 'undefined' && isAuth) {
 	if (typeof unreviewed != 'undefined' && 0 < unreviewed.rows.length) { %>
     <h2>Unreviewed feedback</h2>
-    <ul>
+    <ol>
         <% unreviewed.rows.forEach(function(r) { %>
             <li><%= r.time %> - <%= r.content %></li>
         <% }); %>
-        </ul>
+    </ol>
 <% } else { %>
     <p>No unreviewed feedback</p>
 <% }
