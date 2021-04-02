@@ -10,7 +10,7 @@ exports.get_feedback = function(req, res) {
 		db.pool.connect()
 			.then(client => {
 				return client
-					.query("SELECT * FROM feedback WHERE NOT reviewed ORDER BY time DESC")
+					.query("SELECT * FROM feedback WHERE NOT reviewed ORDER BY time")
 					.then(unreviewed => {
 						client.release();
 						res.render("pages/feedback", { isAuth: isAuth, unreviewed: unreviewed });
