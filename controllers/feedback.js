@@ -60,16 +60,16 @@ exports.post_feedback = [
 					return client
 						.query(`INSERT INTO feedback (id, time, content, location, reviewed)
 						VALUES(DEFAULT, DEFAULT, '${req.body.content}', '${req.body.location}', DEFAULT)`)
-						.then(res => {
+						.then(() => {
 							client.release();
-							res.redirect("pages/index");
+							res.redirect("/");
 						})
 						.catch(err => {
 							client.release();
 							console.log(err.stack);
 							res.render("pages/feedback", { s_auth: req.oidc.isAuthenticated(), errors: [db.err_msg] });
 						});
-				});
+				}); // replace by email to location ?
 		else
 			res.render("pages/feedback", { is_auth: req.oidc.isAuthenticated(), errors: errors.array() });
 	}
