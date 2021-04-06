@@ -36,8 +36,6 @@
     * https://github.com/expressjs/express/tree/master/examples/view-constructor
     * https://github.com/expressjs/express/tree/master/examples/view-locals
     * https://github.com/expressjs/express/tree/master/examples/ejs
-    
-- MVC : https://github.com/expressjs/express/tree/master/examples/mvc
 
 - routes :
     * https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
