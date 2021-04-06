@@ -19,6 +19,7 @@ const app = express();
 const router = express.Router();
 
 const feedback_controller = require('./controllers/feedback');
+const policies_controller = require('./controllers/policies');
 const bodyParser = require('body-parser');
 
 Sentry.init({
@@ -56,6 +57,9 @@ router
 	})
 	.get('/feedback', feedback_controller.get_feedback)
 	.post('/feedback', feedback_controller.post_feedback)
+	.get('/policies', policies_controller.get_policies)
+	.get('/policies/:file(*)', policies_controller.download)
+	.post('/policies', policies_controller.post_policies)
 	.get("/dashboard", requiresAuth(), (req, res) => res.render("pages/dashboard"));
 
 app.use(router);
