@@ -25,10 +25,10 @@ exports.get_feedback = function(req, res) {
 		db.pool.connect()
 			.then(client => {
 				return client
-					.query("SELECT * FROM locations ORDER BY name")
-					.then(locations => {
+					.query("SELECT * FROM states ORDER BY name")
+					.then(states => {
 						client.release();
-						res.render("pages/feedback", { isAuth: isAuth, locations: locations });
+						res.render("pages/feedback", { isAuth: isAuth, states: states });
 					})
 					.catch(err => {
 						client.release();
