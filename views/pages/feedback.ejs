@@ -1,57 +1,79 @@
 <!DOCTYPE html>
 <html lang='en'>
-
 <head>
-    <title>Feedback</title>
+    <title>Demeter | Feedback</title>
     <meta name="description" content="Feedback page">
-
     <%- include ("../partials/header.ejs") %>
+    <link rel="stylesheet" type="text/css" href="stylesheets/feedback.css">
 </head>
 
-<body>
-<% if (typeof isAuth != 'undefined' && isAuth) {
-	if (typeof unreviewed != 'undefined' && 0 < unreviewed.rows.length) { %>
-    <h2>Unreviewed feedback</h2>
-    <ol>
-        <% unreviewed.rows.forEach(function(r) { %>
-            <li><%= r.time %> - <%= r.content %></li>
-        <% }); %>
-    </ol>
-<% } else { %>
-    <p>No unreviewed feedback</p>
-<% }
-} else { %>
-    <form action="/feedback" method="post">
-        <label for="location">Location</label><br>
-        <select id="location" name="location" required>
-            <option value="">Select State/UTs</option>
-            <% if (typeof locations != 'undefined') {
-                locations.rows.forEach(function(r) { %>
-                    <option value="<%= r.name.toLowerCase().replace(/ /g, "_"); %>"><%= r.name %></option>
-                <% });
-            } %>
-            <option value="mdm_tech_support">MDM Tech Support</option>
-        </select>
-        <br>
-        <label for="content">Your feedback</label><br>
-        <textarea
-            id="content" name="content"
-            rows="4" cols="50"
-            spellcheck=true
-            minlength=1 maxlength='4096'
-            required></textarea>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
-<% } %>
+<body class='d-flex flex-column h-100 bg-white'>
+    <%- include ("../partials/nav.ejs") %>
 
-<% if (typeof errors == 'object') { %>
-    <ul>
-        <% errors.forEach(function(e) { %>
-            <li><%= e.msg %></li>
-        <% }); %>
-    </ul>
-<% } %>
+    <div class='container'>
+        <main class="col-md-10 col-lg-12 mx-auto">
+            <% if (typeof isAuth != 'undefined' && isAuth) {
+            if (typeof unreviewed != 'undefined' && 0 < unreviewed.rows.length) { %>
+                <h2>Unreviewed feedback</h2>
+                <ol>
+                    <% unreviewed.rows.forEach(function(r) { %>
+                        <li><%= r.time %> - <%= r.content %></li>
+                    <% }); %>
+                </ol>
+            <% } else { %>
+                <p>No unreviewed feedback</p>
+            <% }
+            } else { %>
+                <div class='row'>
+                    <div class='col-3 me-3 align-self-end'>
+                        <img src="img/erica-steeves-G_lwAp0TF38-unsplash.jpg" class="img-fluid rounded-3" alt="A hand holding a letter">
+                    </div>
+                    <div class='col-8 float-end'>
+                        <h2 class='display-4'>Feedback</h2>
+
+                        <form action="/feedback" method="post">
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label><br>
+                                <select id="location" name="location" required class="form-select">
+                                    <option value="">Select State/UTs</option>
+                                    <% if (typeof states != 'undefined') {
+                                    states.rows.forEach(function(s) { %>
+                                        <option value="<%= s.name.toLowerCase().replace(/ /g, "_"); %>"><%= s.name %></option>
+                                    <% });
+                                    } %>
+                                    <option value="mdm_tech_support">MDM Tech Support</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Your feedback</label><br>
+                                <textarea
+                                        id="content" name="content"
+                                        rows="4" cols="50"
+                                        spellcheck=true
+                                        minlength=1 maxlength='4096'
+                                        aria-describedby="feedbackHelpBlock"
+                                        class="form-control"
+                                        required></textarea>
+                                <div id="feedbackHelpBlock" class="form-text">
+                                    Please tell us about the problem you encountered or the quality of the service to help us optimize your experience.
+                                </div>
+                            </div>
+                            <input type="submit" value="Submit" class='btn btn-dark'>
+                        </form>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (typeof errors == 'object') { %>
+                <ul>
+                    <% errors.forEach(function(e) { %>
+                        <li><%= e.msg %></li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </main>
+    </div>
+
     <% photo_credit = 'Photo by <a href="https://unsplash.com/@ecees?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">erica steeves</a> on <a href="https://unsplash.com/s/photos/mail?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'; %>
     <%- include ("../partials/footer.ejs") %>
 </body>
