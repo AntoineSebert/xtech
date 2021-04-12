@@ -15,7 +15,10 @@
                 </li>
             </ul>
             <span class="col-md-3 text-end text-muted">
-                <%- photo_credit + ' | ' %> &copy; T37 2021
+                <%if (typeof photo_credit != 'undefined' && photo_credit) {%>
+                    <%- photo_credit + ' | ' %>
+                <%}%>
+                &copy; T37 2021
             </span>
         </div>
     </div>
