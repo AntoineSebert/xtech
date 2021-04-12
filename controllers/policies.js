@@ -1,12 +1,24 @@
+const fs = require("fs");
+const path = require('path');
 
 exports.get_policies = function(req, res) {
 	const isAuth = req.oidc.isAuthenticated();
 
-	if(isAuth)
-		res.render("pages/policies", { is_auth: isAuth });
-	else {
-		res.render("pages/policies", { files: files });
-	}
+	fs.readdir(path.join(__dirname, "policies"), function(err, files) {
+		if (err) {
+			console.log("Error getting directory information.");
+		} else {
+			files.forEach(function(file) {
+				console.log(file);
+			});
+
+			if(isAuth)
+				res.render("pages/policies", { is_auth: isAuth });
+			else {
+				res.render("pages/policies", { files: files });
+			}
+		}
+	});
 };
 
 exports.post_policies = function(req, res) {
@@ -15,8 +27,7 @@ exports.post_policies = function(req, res) {
 };
 
 exports.download = function(req, res, next) {
-	const path = require('path');
-	const filePath = path.join(__dirname, 'files', req.params.file);
+	const filePath = path.join(__dirname, 'policies', req.params.file);
 
 	res.download(filePath, function(err) {
 		if (!err) return; // file sent
