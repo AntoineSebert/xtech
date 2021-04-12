@@ -1,0 +1,4 @@
+#cover {
+	background-image: url("../img/dan-gold-4_jhDO54BYg-unsplash.jpg");/*use media query to make responsive */
+	opacity: 0.4;
+}

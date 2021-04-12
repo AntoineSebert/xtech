@@ -1,7 +1,68 @@
-html{
-    height: 100%;
+html {
+	color: #222;
+	font-size: 1em;
+	line-height: 1.4;
+	height: 100%;
 }
 
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Customize the background color to match your design.
+ */
+
+::selection {
+	background: #b3d4fc;
+	text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+	vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+	resize: vertical;
+}
+/*
 body{
     background: #2F3035;
     background-size: cover;
@@ -53,13 +114,8 @@ p{
     color: white;
     font-family: Arial, Helvetica, sans-serif;
 }
-
-a{
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    /* text-decoration: none; */
-}
-
+*/
+/*
 nav a{
     text-decoration: none;
     font-size: 12px;
@@ -130,4 +186,9 @@ nav img{
 
 .feedback-form .custom-select{
     margin: 0;
+}
+*/
+
+.navbar-brand {
+	letter-spacing: 3px;
 }

@@ -6,38 +6,23 @@
 
     <%- include ("../partials/header.ejs") %>
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-    <script src="scripts/landing.js" type='application/javascript'></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
 </head>
 
-<body onload="init()">
-<%- include ("../partials/nav.ejs") %>
+<body class="d-flex flex-column h-100 bg-dark">
+    <%- include ("../partials/nav.ejs") %>
 
-<section class="showcase">
-    <header>
-        <h2 class="logo">Demeter</h2>
-        <div class="toggle"></div>
-    </header>
-
-    <video src="explore.mp4" muted loop autoplay></video>
-
-    <div class="overlay"></div>
-
-    <div class="text">
-        <h2>Balanced life</h2>
-        <h3>Don't focus on how you eat. Focus on what you eat</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto
-            dolores ea libero quae tenetur vero vitae! Ipsum maiores rem totam!</p>
-        <a href="#">About Us</a>
+    <div id='cover' class='px-3 vh-100 position-relative'>
     </div>
-</section>
+    <div class="position-absolute top-50 start-50 translate-middle text-left text-white">
+        <h1 class='display-2'>Balanced life</h1>
+        <h3 class='display-5'>Don't focus on how you eat. Focus on what you eat.</h3>
+        <p class='text-center mt-5'>
+            <a href="#" class="btn btn-lg btn-secondary fw-bold border-light bg-light text-dark">Learn more</a>
+        </p>
 
-<nav class="menu">
-    <ul>
-        <li><a href="/login">Login</a></li>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Feedback</a></li>
-    </ul>
-</nav>
+    </div>
+
+    <%- include ("../partials/footer.ejs") %>
 </body>
 </html>
