@@ -2,57 +2,23 @@
 
 Ordered by descending priority.
 
-## 1. feature 6
+## 1. feature 7 "Captures Feedbacks & Grievances"
 
-> Could you tell us more about the way you would like this feature to operate ?
-> We will then translate it into specifications and get back to you for confirmation.
+> How is the feature supposed to work ?
 
-- one or more features ?
-- how would that work (typical scenario) ?
+- typical walkthrough
+- data required
+- eventual edge cases ?
 
-```
-now
-
-- ground team
-- collect data
-- write it on google forms
-- upload
-- come back
-
-cooking by batches
-hand thermometers
-```
-
-```
-ideally
-
-- direct upload from kitchen to system through webapp
-```
-
-## 2. branding
-
-> With these elements we can adjust the interface to your organization and project
-
-- logo(s) (small, big) : NGO, government, etc... (+ location)
-- motto
-- favicon(s)
-- font(s)
-- color scheme (between 2 and 4) : rgb, hex code, names, ...
-- generic keywords to describe UI
-- presentation NGO (short and long)
-
-```
-we will receive them soon
-```
-
-## 3. feature 4
+## 2. feature 4 "Database of Policy Guidelines and FSSAI Food Safety Mandates"
 
 > How would you like the documents (policy guidelines, safety mandates) on the platform to be accessible and added/modified ?
 
 - how to upload them ?
-- how to consult them ?  html page ? integrated pdf viewer ?
+- search function
+- what is "dt" in name desc ?
 
-## 4. data
+## 3. feature 3 "Database of all ingredients & recipes PAN-India"
 
 > We need to build models of the components of the system, depending on your needs and constraints
 
@@ -60,38 +26,30 @@ we will receive them soon
 - integration with potential current database ?
 - database migration ?
 
-```
-community kitchens
-- single database
-- migration with IT team
+## 4. states / locations
 
-food composition table
-- nutrients
-```
+list of states with email
+list of locations by state
 
-## 5. hosting
+## 5. walkthrough
 
-> We can help you with the deployment to production from the beginning of the project
+soon (04-16)
+- landing page 
+- dashboard
+- feedback
+- policy / guidelines (maybe 04-23)
 
-- platform (OS + specs)
-- server (name + version)
-- rollback/saves
-- scaling ?
+later
+- 04-23 : Database of all ingredients & recipes PAN-India (from Microsoft Dynamics)
+- 05-07 : Nutrition Calculation/Food Basket Calculator
+    - get nutrition data from https://www.nin.res.in/
+    - list ingredient -> nutrition value
+    - backend : list of ingredients -> nutrition value
 
-## 6. legal mentions
+latest
+- 05-21 : Food Quantity Recipe Planning & Standardization – Location Specific
+    - list of all menus
 
-> In many countries, a section dedicated to legal mentions must be available. We can use as a base this section on your existing website
-
-- what do we need to include ?
-
-## 7. notifications
-
-> Do you want to include any notification system ? for which feature ?
-
-- mail ?
-- phone ?
-- push notifications ?
-
-```
-- kitchen alerts on food condition
-```
+maybe
+- Monitors Nutrition Compliance according to MDM Guidelines Stipulations
+- Monitors Last Mile Delivery of Meal - Temperature and Time Norms, Food Safety & Hygiene Standards, HACCP Audits, Nutrition Value Compliance
