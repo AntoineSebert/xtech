@@ -6,34 +6,24 @@ exports.get_feedback = function(req, res) {
 	const isAuth = req.oidc.isAuthenticated();
 
 	if(isAuth)
-		db.pool.connect()
-			.then(client => {
-				return client
-					.query("SELECT * FROM feedback WHERE NOT reviewed ORDER BY time")
-					.then(unreviewed => {
-						client.release();
-						res.render("pages/feedback", { isAuth: isAuth, unreviewed: unreviewed });
-					})
-					.catch(err => {
-						client.release();
-						console.log(err.stack);
-						res.render("pages/feedback", { isAuth: isAuth, errors: [db.err_msg] });
-					});
+		db.pool
+			.query("SELECT * FROM feedback WHERE NOT reviewed ORDER BY time")
+			.then(unreviewed => {
+				res.render("pages/feedback", { isAuth: isAuth, unreviewed: unreviewed });
+			})
+			.catch(err => {
+				console.error(err.stack);
+				res.render("pages/feedback", { isAuth: isAuth, errors: [db.err_msg] });
 			});
 	else
-		db.pool.connect()
-			.then(client => {
-				return client
-					.query("SELECT * FROM states ORDER BY name")
-					.then(states => {
-						client.release();
-						res.render("pages/feedback", { isAuth: isAuth, states: states });
-					})
-					.catch(err => {
-						client.release();
-						console.log(err.stack);
-						res.render("pages/feedback", { isAuth: isAuth, errors: [db.err_msg] });
-					});
+		db.pool
+			.query("SELECT * FROM states ORDER BY name")
+			.then(states => {
+				res.render("pages/feedback", { isAuth: isAuth, states: states });
+			})
+			.catch(err => {
+				console.error(err.stack);
+				res.render("pages/feedback", { isAuth: isAuth, errors: [db.err_msg] });
 			});
 };
 
@@ -66,10 +56,10 @@ exports.post_feedback = [
 						.catch(err => {
 							client.release();
 							console.log(err.stack);
-							res.render("pages/feedback", { s_auth: req.oidc.isAuthenticated(), errors: [db.err_msg] });
+							res.render("pages/feedback", { isAuth: req.oidc.isAuthenticated(), errors: [db.err_msg] });
 						});
 				}); // replace by email to location ?
 		else
-			res.render("pages/feedback", { is_auth: req.oidc.isAuthenticated(), errors: errors.array() });
+			res.render("pages/feedback", { isAuth: req.oidc.isAuthenticated(), errors: errors.array() });
 	}
 ];
