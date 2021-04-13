@@ -1,12 +1,18 @@
-<header class='p-3 bg-dark text-white mb-auto'>
+<header class='p-2 bg-dark text-white mb-auto'>
     <div class="container-fluid">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none navbar-brand">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 fs-2 text-white text-decoration-none navbar-brand">
+                <svg class="bi d-block me-2" width="40" height="40" fill="currentColor">
+                    <use xlink:href="img/bootstrap-icons.svg#hexagon-half"/>
+                </svg>
                 DEMETER
             </a>
-            <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            <a href='' class='d-flex col-12 col-md-auto mb-md-0 text-dark text-decoration-none'>
+                <img src="img/skylab-foodlab.png" class='img-fluid w-75 mx-auto' alt="DTU Foodlab logo">
+            </a>
+            <ul class="nav col-12 my-2 justify-content-end my-md-0 text-small col-md-3 text-end">
                 <li>
-                    <a href="/" class="nav-link text-secondary"> <!-- color should be dynamic, using JQuery -->
+                    <a href="/" class="nav-link <%= current_page === 'Home' ? 'link-primary' : 'link-secondary' %>">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
                             <use xlink:href="img/bootstrap-icons.svg#house-door"/>
                         </svg>
@@ -14,7 +20,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/dashboard" class="nav-link text-white">
+                    <a href="/dashboard" class="nav-link <%= current_page === 'Dashboard' ? 'link-primary' : 'link-secondary' %>">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
                             <use xlink:href="img/bootstrap-icons.svg#grid"/>
                         </svg>
@@ -22,15 +28,16 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/feedback" class="nav-link text-white">
+                    <a href="/feedback" class="nav-link <%= current_page === 'Feedback' ? 'link-primary' : 'link-secondary' %>">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
                             <use xlink:href="img/bootstrap-icons.svg#chat-left-quote"/>
                         </svg>
                         Feedback
                     </a>
                 </li>
+                <!--if login else logout-->
                 <li>
-                    <a href="/login" class="nav-link text-white">
+                    <a href="/login" class="nav-link <%= current_page === 'Login' ? 'link-primary' : 'link-secondary' %>">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
                             <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
                         </svg>

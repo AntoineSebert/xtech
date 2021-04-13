@@ -3,6 +3,6 @@
 	max-height: 30vh;
 }
 
-img {
+#banner img {
 	transform: translateY(-30%);
 }
