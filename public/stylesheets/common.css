@@ -72,3 +72,9 @@ textarea {
 header ul.nav a.link-secondary:hover {
 	color: var(--bs-light);
 }
+
+/* FOOTER */
+
+footer ul.nav a.link-secondary:hover {
+	color: var(--bs-dark);
+}
