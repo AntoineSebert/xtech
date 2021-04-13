@@ -52,13 +52,17 @@ app.use(express.static(path.join(__dirname, "public")))
 	.set("view engine", "ejs");
 
 router
-	.get('/', (req, res) => res.render("pages/index"))
+	.get('/', (req, res) => {
+		res.render("pages/index", { isAuth: req.oidc.isAuthenticated() });
+	})
 	.get("/account", requiresAuth(), (req, res) => {
 		res.send(JSON.stringify(req.oidc.user));
 	})
 	.get('/feedback', feedback_controller.get_feedback)
 	.post('/feedback', feedback_controller.post_feedback)
-	.get('/post_feedback', (req, res) => res.render("pages/post-feedback"))
+	.get('/post_feedback', (req, res) => {
+		res.render("pages/post-feedback", { isAuth: req.oidc.isAuthenticated() });
+	})
 	.get('/policies', policies_controller.get_policies)
 	.get('/policies/:file(*)', policies_controller.download)
 	.post('/policies', policies_controller.post_policies)
