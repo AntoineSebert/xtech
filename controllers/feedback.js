@@ -1,5 +1,4 @@
 const { body, validationResult } = require('express-validator');
-var session = require('express-session');
 
 const db = require('../lib/db');
 
@@ -41,7 +40,7 @@ exports.get_feedback = function(req, res) {
 exports.post_feedback = [
 	body('location')
 		.trim()
-		.isLength({ min: 1, max: 128 })
+		.isLength({ min: 1, max: 128 }) // change to list of states
 		.withMessage('Location empty.')
 		.escape(),
 	body('content')
