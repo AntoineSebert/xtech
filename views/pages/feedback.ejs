@@ -51,8 +51,16 @@
                     <input type="submit" value="Submit" class='btn btn-outline-light btn-lg'>
                 </form>
             </div>
+            <% if (typeof errors == 'object') { %>
+                <ul>
+                    <% errors.forEach(function(e) { %>
+                        <li><%= e.msg %></li>
+                    <% }); %>
+                </ul>
+            <% } %>
         </div>
     </div>
+
     <% photo_credit = 'Photos by <a href="https://unsplash.com/@ecees?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">erica steeves</a>' +
             ' and <a href="https://unsplash.com/@danielcgold?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Dan Gold</a>' +
             ' on <a href="https://unsplash.com/s/photos/mail?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'; %>
