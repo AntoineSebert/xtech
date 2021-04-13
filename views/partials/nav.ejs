@@ -10,13 +10,29 @@
             <a href='https://www.skylabfoodlab.com/' target='_blank' class='d-flex col-12 col-md-auto mb-md-0 text-dark text-decoration-none'>
                 <img src="img/skylab-foodlab.png" class='img-fluid w-75 mx-auto' alt="DTU Foodlab logo">
             </a>
-            <ul class="nav col-12 my-2 justify-content-end my-md-0 text-small col-md-3 text-end">
+            <ul class="nav col-12 my-2 justify-content-end my-md-0 text-small col-md-4 text-end">
                 <li>
                     <a href="/" class="nav-link <%= current_page === 'Home' ? 'link-primary' : 'link-secondary' %>">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
                             <use xlink:href="img/bootstrap-icons.svg#house-door"/>
                         </svg>
                         Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link <%= current_page === 'Guidelines' ? 'link-primary' : 'link-secondary' %>">
+                        <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
+                            <use xlink:href="img/bootstrap-icons.svg#file-text"/>
+                        </svg>
+                        Guidelines
+                    </a>
+                </li>
+                <li>
+                    <a href="/feedback" class="nav-link <%= current_page === 'Feedback' ? 'link-primary' : 'link-secondary' %>">
+                        <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
+                            <use xlink:href="img/bootstrap-icons.svg#chat-left-quote"/>
+                        </svg>
+                        Feedback
                     </a>
                 </li>
                 <li>
@@ -28,21 +44,22 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/feedback" class="nav-link <%= current_page === 'Feedback' ? 'link-primary' : 'link-secondary' %>">
+                    <!--if login else logout-->
+                    <% if (typeof isAuth != "undefined" && isAuth === true) { %>
+                    	<a href="/logout" class="nav-link <%= current_page === 'Login' ? 'link-primary' : 'link-secondary' %>">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
-                            <use xlink:href="img/bootstrap-icons.svg#chat-left-quote"/>
+                            <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
                         </svg>
-                        Feedback
-                    </a>
-                </li>
-                <!--if login else logout-->
-                <li>
+                        Logout
+                        </a>
+                    <% } else { %>
                     <a href="/login" class="nav-link <%= current_page === 'Login' ? 'link-primary' : 'link-secondary' %>">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
                             <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
                         </svg>
                         Login
                     </a>
+                    <% } %>
                 </li>
             </ul>
         </div>
