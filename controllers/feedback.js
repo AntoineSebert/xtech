@@ -62,7 +62,7 @@ exports.post_feedback = [
 						VALUES(DEFAULT, DEFAULT, '${req.body.content}', '${req.body.location}', DEFAULT)`)
 						.then(() => {
 							client.release();
-							res.redirect("/");
+							res.redirect("/post_feedback");
 						})
 						.catch(err => {
 							client.release();

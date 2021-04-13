@@ -58,6 +58,7 @@ router
 	})
 	.get('/feedback', feedback_controller.get_feedback)
 	.post('/feedback', feedback_controller.post_feedback)
+	.get('/post_feedback', (req, res) => res.render("pages/post-feedback"))
 	.get('/policies', policies_controller.get_policies)
 	.get('/policies/:file(*)', policies_controller.download)
 	.post('/policies', policies_controller.post_policies)

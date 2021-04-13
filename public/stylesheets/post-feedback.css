@@ -1,0 +1,8 @@
+#banner {
+	overflow: hidden;
+	max-height: 30vh;
+}
+
+img {
+	transform: translateY(-30%);
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>Demeter | Your opinion matters</title>
+    <meta name="description" content="Thanks for your feedback">
+    <%- include ("../partials/header.ejs") %>
+    <link rel="stylesheet" type="text/css" href="stylesheets/post-feedback.css">
+</head>
+
+<body class='d-flex flex-column h-100 bg-white'>
+    <%- include ("../partials/nav.ejs") %>
+
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col">
+                <div id='banner' class='mx-auto col-12 h-50 mb-5'>
+                    <img src="img/edgar-castrejon-1CsaVdwfIew-unsplash.jpg" class="rounded img-fluid float-start " alt="Tasty fruits on a plate">
+                </div>
+                <h1 class='display-3 mb-5'>Thanks for your feedback !</h1>
+                <a href='/' class='link-dark'><p>Go back to home page</p></a>
+            </div>
+        </div>
+    </div>
+
+    <% photo_credit = 'Photo by <a href="https://unsplash.com/@edgarraw?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Edgar Castrejon</a> on <a href="https://unsplash.com/s/photos/food?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'; %>
+    <%- include ("../partials/footer.ejs") %>
+</body>
