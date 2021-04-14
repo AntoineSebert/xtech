@@ -52,20 +52,37 @@ app.use(express.static(path.join(__dirname, "public")))
 	.set("view engine", "ejs");
 
 router
+	// PUBLIC SECTION
 	.get('/', (req, res) => {
 		res.render("pages/index", { isAuth: req.oidc.isAuthenticated() });
 	})
-	.get("/account", requiresAuth(), (req, res) => {
-		res.send(JSON.stringify(req.oidc.user));
+	.get("/about-us", (req, res) => {
+		res.render("pages/about-us", { isAuth: req.oidc.isAuthenticated() });
+	})
+	.get("/contact-us", (req, res) => {
+		res.render("pages/contact-us", { isAuth: req.oidc.isAuthenticated(), user: req.oidc.user });
 	})
 	.get('/feedback', feedback_controller.get_feedback)
 	.post('/feedback', feedback_controller.post_feedback)
 	.get('/post_feedback', (req, res) => {
 		res.render("pages/post-feedback", { isAuth: req.oidc.isAuthenticated() });
 	})
+	.get("/learn-more", (req, res) => {
+		res.render("pages/learn-more", { isAuth: req.oidc.isAuthenticated() });
+	})
 	.get('/policies', policies_controller.get_policies)
 	.get('/policies/:file(*)', policies_controller.download)
 	.post('/policies', policies_controller.post_policies)
+	.get("/privacy", (req, res) => {
+		res.render("pages/privacy", { isAuth: req.oidc.isAuthenticated() });
+	})
+	.get("/terms-of-service", (req, res) => {
+		res.render("pages/terms-of-service", { isAuth: req.oidc.isAuthenticated() });
+	})
+	// PRIVATE SECTION
+	.get("/account", requiresAuth(), (req, res) => {
+		res.render("pages/index", { isAuth: req.oidc.isAuthenticated(), user: req.oidc.user });
+	})
 	.get("/dashboard", requiresAuth(), dashboard_controller.get_dashboard);
 
 app.use(router);
