@@ -29,7 +29,7 @@ Ordered by descending priority.
 ## 4. states / locations
 
 list of states with email
-list of locations by state
+list of locations with state
 
 ## 5. walkthrough
 
