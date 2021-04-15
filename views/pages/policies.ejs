@@ -1,21 +1,23 @@
-<!--
-authusers : upload / remove
-everyone else : consultation
-pdfs files
--->
-
 <!DOCTYPE html>
 <html lang='en'>
-
 <head>
-    <title>Policies</title>
-    <meta name="description" content="Policies page">
-
+    <title>Policies | Demeter</title>
+    <meta name="description" content="Read or download here the official Policies Guidelines for the Mid-Day Meal Scheme.">
     <%- include ("../partials/header.ejs") %>
 </head>
 
-<body>
+<body class='d-flex flex-column h-100 bg-dark'>
+    <% current_page = "Learn More" %>
+    <%- include ("../partials/nav.ejs") %>
+
+    <!--
+    authusers : upload / remove
+    everyone else : consultation
+    pdfs files
+    -->
+
     <ul>
         <li></li>
     </ul>
+    <%- include ("../partials/footer.ejs") %>
 </body>
