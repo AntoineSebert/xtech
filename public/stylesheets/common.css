@@ -63,6 +63,28 @@ textarea {
 	resize: vertical;
 }
 
+/* FONTS */
+
+@font-face {
+	font-family: "TeX Gyre Adventor";
+	src: url("../fonts/tex-gyre-adventor/texgyreadventor-regular.otf");
+}
+
+@font-face {
+	font-family: "TeX Gyre Adventor Italic";
+	src: url("../fonts/tex-gyre-adventor/texgyreadventor-italic.otf");
+}
+
+@font-face {
+	font-family: "TeX Gyre Adventor Bold";
+	src: url("../fonts/tex-gyre-adventor/texgyreadventor-bold.otf");
+}
+
+@font-face {
+	font-family: "TeX Gyre Adventor Bold Italic";
+	src: url("../fonts/tex-gyre-adventor/texgyreadventor-bolditalic.otf");
+}
+
 /* HEADER */
 
 .navbar-brand {
@@ -71,6 +93,10 @@ textarea {
 
 header ul.nav a.link-secondary:hover {
 	color: var(--bs-light);
+}
+
+header a.navbar-brand {
+	font-family: "TeX Gyre Adventor", serif;
 }
 
 /* FOOTER */
