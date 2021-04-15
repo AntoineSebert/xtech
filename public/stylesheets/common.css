@@ -71,18 +71,13 @@ textarea {
 }
 
 @font-face {
-	font-family: "TeX Gyre Adventor Italic";
-	src: url("../fonts/tex-gyre-adventor/texgyreadventor-italic.otf");
+	font-family: "Aileron";
+	src: url("../fonts/aileron/Aileron-Regular.otf");
 }
 
 @font-face {
-	font-family: "TeX Gyre Adventor Bold";
-	src: url("../fonts/tex-gyre-adventor/texgyreadventor-bold.otf");
-}
-
-@font-face {
-	font-family: "TeX Gyre Adventor Bold Italic";
-	src: url("../fonts/tex-gyre-adventor/texgyreadventor-bolditalic.otf");
+	font-family: "Source Sans Pro";
+	src: url("../fonts/source-sans-pro/SourceSansPro-Regular.ttf");
 }
 
 /* HEADER */
@@ -103,4 +98,14 @@ header a.navbar-brand {
 
 footer ul.nav a.link-secondary:hover {
 	color: var(--bs-dark);
+}
+
+/**/
+
+a.btn, input.btn {
+	font-family: "Aileron", serif;
+}
+
+body {
+	font-family: "Source Sans Pro", serif;
 }
