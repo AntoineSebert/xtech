@@ -3,7 +3,6 @@ const Sentry = require("@sentry/node");
 const Tracing = require("@sentry/tracing");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
-
 const { auth, requiresAuth } = require('express-openid-connect');
 
 const config = {
@@ -36,6 +35,10 @@ Sentry.init({
 	tracesSampleRate: 1.0,
 });
 
+const options = {
+	setHeaders: function (res, path, stat) { res.set('Permissions-Policy', 'interest-cohort=()'); }
+};
+
 // RequestHandler creates a separate execution context using domains, so that every transaction/span/breadcrumb is
 // attached to its own Hub instance
 app.use(Sentry.Handlers.requestHandler());
@@ -47,9 +50,11 @@ app.use(auth(config));
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "public"), options))
 	.set("views", path.join(__dirname, "views"))
 	.set("view engine", "ejs");
+
+// ROUTES
 
 router
 	// PUBLIC SECTION
