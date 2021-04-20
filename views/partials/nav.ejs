@@ -20,22 +20,12 @@
                     </a>
                 </li>
                 <li>
-                    <!--if login else logout-->
-                    <% if (typeof isAuth != "undefined" && isAuth === true) { %>
-                    	<a href="/logout" class="nav-link link-secondary">
+                    <a href="<%= typeof isAuth != "undefined" && isAuth === true ? "/logout" : "/login" %>" class="nav-link link-secondary">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
                             <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
                         </svg>
-                        Logout
-                        </a>
-                    <% } else { %>
-                        <a href="/login" class="nav-link link-secondary">
-                            <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
-                                <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
-                            </svg>
-                            Login
-                        </a>
-                    <% } %>
+                        <%= typeof isAuth != "undefined" && isAuth === true ? "Logout" : "Login" %>
+                    </a>
                 </li>
             </ul>
         </div>
