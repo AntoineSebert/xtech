@@ -17,10 +17,11 @@
                     <a href="/contact-us" class="nav-link link-secondary px-2 mx-4">Contact Us</a>
                 </li>
             </ul>
+            
             <span class="col-md-3 text-end text-muted">
-                <%if (typeof photo_credit != 'undefined' && photo_credit) {%>
+                <% if (typeof photo_credit != 'undefined' && photo_credit) { %>
                     <%- photo_credit + ' | ' %>
-                <%}%>
+                <% } %>
                 &copy; T37 2021
             </span>
         </div>

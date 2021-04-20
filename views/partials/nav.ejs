@@ -12,23 +12,7 @@
             </a>
             <ul class="nav col-12 my-2 justify-content-end my-md-0 text-small col-md-3 text-end">
                 <li>
-                    <a href="#" class="nav-link <%= current_page === 'Guidelines' ? 'link-primary' : 'link-secondary' %>">
-                        <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
-                            <use xlink:href="img/bootstrap-icons.svg#file-text"/>
-                        </svg>
-                        Guidelines
-                    </a>
-                </li>
-                <li>
-                    <a href="/feedback" class="nav-link <%= current_page === 'Feedback' ? 'link-primary' : 'link-secondary' %>">
-                        <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
-                            <use xlink:href="img/bootstrap-icons.svg#chat-left-quote"/>
-                        </svg>
-                        Feedback
-                    </a>
-                </li>
-                <li>
-                    <a href="/dashboard" class="nav-link <%= current_page === 'Dashboard' ? 'link-primary' : 'link-secondary' %>">
+                    <a href="/dashboard" class="nav-link link-secondary">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
                             <use xlink:href="img/bootstrap-icons.svg#grid"/>
                         </svg>
@@ -38,19 +22,19 @@
                 <li>
                     <!--if login else logout-->
                     <% if (typeof isAuth != "undefined" && isAuth === true) { %>
-                    	<a href="/logout" class="nav-link <%= current_page === 'Login' ? 'link-primary' : 'link-secondary' %>">
+                    	<a href="/logout" class="nav-link link-secondary">
                         <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
                             <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
                         </svg>
                         Logout
                         </a>
                     <% } else { %>
-                    <a href="/login" class="nav-link <%= current_page === 'Login' ? 'link-primary' : 'link-secondary' %>">
-                        <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
-                            <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
-                        </svg>
-                        Login
-                    </a>
+                        <a href="/login" class="nav-link link-secondary">
+                            <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
+                                <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
+                            </svg>
+                            Login
+                        </a>
                     <% } %>
                 </li>
             </ul>
