@@ -50,20 +50,27 @@ app.use(express.static(path.join(__dirname, "public"), {
 const router = express.Router()
 	// PUBLIC SECTION
 	.get('/', (req, res) =>
-		res.render("pages/index", { isAuth: req.oidc.isAuthenticated() }))
+		res.render("pages/index", req.oidc.isAuthenticated()
+			? { isAuth: true, user: req.oidc.user } : { isAuth: false }))
 	.get("/about-us", (req, res) =>
-		res.render("pages/about-us", { isAuth: req.oidc.isAuthenticated() }))
+		res.render("pages/about-us", req.oidc.isAuthenticated()
+			? { isAuth: true, user: req.oidc.user } : { isAuth: false }))
 	.get("/contact-us", (req, res) =>
-		res.render("pages/contact-us", { isAuth: req.oidc.isAuthenticated(), user: req.oidc.user }))
+		res.render("pages/contact-us", req.oidc.isAuthenticated()
+			? { isAuth: true, user: req.oidc.user } : { isAuth: false }))
 	.get("/learn-more", (req, res) =>
-		res.render("pages/learn-more", { isAuth: req.oidc.isAuthenticated() }))
+		res.render("pages/learn-more", req.oidc.isAuthenticated()
+			? { isAuth: true, user: req.oidc.user } : { isAuth: false }))
 	.get("/privacy", (req, res) =>
-		res.render("pages/privacy", { isAuth: req.oidc.isAuthenticated() }))
+		res.render("pages/privacy", req.oidc.isAuthenticated()
+			? { isAuth: true, user: req.oidc.user } : { isAuth: false }))
 	.get("/terms-of-service", (req, res) =>
-		res.render("pages/terms-of-service", { isAuth: req.oidc.isAuthenticated() }))
+		res.render("pages/terms-of-service", req.oidc.isAuthenticated()
+			? { isAuth: true, user: req.oidc.user } : { isAuth: false }))
 	// PRIVATE SECTION
 	.get("/dashboard", requiresAuth(), (req, res) =>
-		res.render("pages/dashboard", { isAuth: req.oidc.isAuthenticated(), user: req.oidc.user }));
+		res.render("pages/dashboard", req.oidc.isAuthenticated()
+			? { isAuth: true, user: req.oidc.user } : { isAuth: false }));
 
 app.use(router);
 
