@@ -21,9 +21,13 @@
                 </li>
                 <li>
                     <a href="<%= typeof isAuth != "undefined" && isAuth === true ? "/logout" : "/login" %>" class="nav-link link-secondary">
-                        <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
-                            <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
-                        </svg>
+                        <% if (typeof user != "undefined") { %>
+                            <img height='32' width='32' src="<%= user.picture %>" class="bi d-block mx-auto mb-1 rounded-circle" alt="Your profile picture">
+                        <% } else { %>
+                            <svg class="bi d-block mx-auto mb-1" width="32" height="32" fill="currentColor">
+                                <use xlink:href="img/bootstrap-icons.svg#person-circle"/>
+                            </svg>
+                        <% } %>
                         <%= typeof isAuth != "undefined" && isAuth === true ? "Logout" : "Login" %>
                     </a>
                 </li>
