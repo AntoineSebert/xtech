@@ -4,6 +4,7 @@ const Tracing = require("@sentry/tracing");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
 const { auth, requiresAuth } = require('express-openid-connect');
+const bodyParser = require('body-parser');
 
 const config = {
 	authRequired: false,
@@ -15,12 +16,6 @@ const config = {
 };
 
 const app = express();
-const router = express.Router();
-
-const feedback_controller = require('./controllers/feedback');
-const policies_controller = require('./controllers/policies');
-const dashboard_controller = require('./controllers/dashboard');
-const bodyParser = require('body-parser');
 
 Sentry.init({
 	dsn: process.env.SENTRY_DSN,
@@ -35,10 +30,6 @@ Sentry.init({
 	tracesSampleRate: 1.0,
 });
 
-const options = {
-	setHeaders: function (res, path, stat) { res.set('Permissions-Policy', 'interest-cohort=()'); }
-};
-
 // RequestHandler creates a separate execution context using domains, so that every transaction/span/breadcrumb is
 // attached to its own Hub instance
 app.use(Sentry.Handlers.requestHandler());
@@ -50,45 +41,29 @@ app.use(auth(config));
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-app.use(express.static(path.join(__dirname, "public"), options))
+app.use(express.static(path.join(__dirname, "public"), {
+	setHeaders: (res, path, stat) => res.set('Permissions-Policy', 'interest-cohort=()')
+}))
 	.set("views", path.join(__dirname, "views"))
 	.set("view engine", "ejs");
 
-// ROUTES
-
-router
+const router = express.Router()
 	// PUBLIC SECTION
-	.get('/', (req, res) => {
-		res.render("pages/index", { isAuth: req.oidc.isAuthenticated() });
-	})
-	.get("/about-us", (req, res) => {
-		res.render("pages/about-us", { isAuth: req.oidc.isAuthenticated() });
-	})
-	.get("/contact-us", (req, res) => {
-		res.render("pages/contact-us", { isAuth: req.oidc.isAuthenticated(), user: req.oidc.user });
-	})
-	.get('/feedback', feedback_controller.get_feedback)
-	.post('/feedback', feedback_controller.post_feedback)
-	.get('/post_feedback', (req, res) => {
-		res.render("pages/post-feedback", { isAuth: req.oidc.isAuthenticated() });
-	})
-	.get("/learn-more", (req, res) => {
-		res.render("pages/learn-more", { isAuth: req.oidc.isAuthenticated() });
-	})
-	.get('/policies', policies_controller.get_policies)
-	.get('/policies/:file(*)', policies_controller.download)
-	.post('/policies', policies_controller.post_policies)
-	.get("/privacy", (req, res) => {
-		res.render("pages/privacy", { isAuth: req.oidc.isAuthenticated() });
-	})
-	.get("/terms-of-service", (req, res) => {
-		res.render("pages/terms-of-service", { isAuth: req.oidc.isAuthenticated() });
-	})
+	.get('/', (req, res) =>
+		res.render("pages/index", { isAuth: req.oidc.isAuthenticated() }))
+	.get("/about-us", (req, res) =>
+		res.render("pages/about-us", { isAuth: req.oidc.isAuthenticated() }))
+	.get("/contact-us", (req, res) =>
+		res.render("pages/contact-us", { isAuth: req.oidc.isAuthenticated(), user: req.oidc.user }))
+	.get("/learn-more", (req, res) =>
+		res.render("pages/learn-more", { isAuth: req.oidc.isAuthenticated() }))
+	.get("/privacy", (req, res) =>
+		res.render("pages/privacy", { isAuth: req.oidc.isAuthenticated() }))
+	.get("/terms-of-service", (req, res) =>
+		res.render("pages/terms-of-service", { isAuth: req.oidc.isAuthenticated() }))
 	// PRIVATE SECTION
-	.get("/account", requiresAuth(), (req, res) => {
-		res.render("pages/index", { isAuth: req.oidc.isAuthenticated(), user: req.oidc.user });
-	})
-	.get("/dashboard", requiresAuth(), dashboard_controller.get_dashboard);
+	.get("/dashboard", requiresAuth(), (req, res) =>
+		res.render("pages/dashboard", { isAuth: req.oidc.isAuthenticated(), user: req.oidc.user }));
 
 app.use(router);
 
