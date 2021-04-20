@@ -1,7 +1,0 @@
-#banner {
-	max-height: 30vh;
-}
-
-#banner img {
-	transform: translateY(-30%);
-}
