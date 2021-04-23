@@ -38,12 +38,12 @@
     * https://github.com/expressjs/express/tree/master/examples/ejs
 
 - routes :
-    * https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
-    * https://github.com/expressjs/express/tree/master/examples/params
-    * https://github.com/expressjs/express/tree/master/examples/resource
-    * https://github.com/expressjs/express/tree/master/examples/route-map
-    * https://github.com/expressjs/express/tree/master/examples/route-middleware
-    * https://github.com/expressjs/express/tree/master/examples/route-separation
+    * [](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes)
+    * [](https://github.com/expressjs/express/tree/master/examples/params)
+    * [](https://github.com/expressjs/express/tree/master/examples/resource)
+    * [](https://github.com/expressjs/express/tree/master/examples/route-map)
+    * [](https://github.com/expressjs/express/tree/master/examples/route-middleware)
+    * [](https://github.com/expressjs/express/tree/master/examples/route-separation)
     
 - sessions : https://github.com/expressjs/express/tree/master/examples/session
 

@@ -2,7 +2,7 @@
 	"name": "Demeter Nutrition Platform",
 	"description": "A web application that provides an efficient platform for nutrition optimisation and meal planning",
 	"repository": "https://github.com/AntoineSebert/xtech",
-	"logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/main/public/node.svg",
+	"logo": "img/logo.svg",
 	"keywords": ["demeter", "nutrition", "webapp"],
 	"image": "heroku/nodejs"
 }
