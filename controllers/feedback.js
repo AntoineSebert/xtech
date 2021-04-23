@@ -1,65 +1,59 @@
 const { body, validationResult } = require('express-validator');
-
 const db = require('../lib/db');
-
-exports.get_feedback = function(req, res) {
-	const isAuth = req.oidc.isAuthenticated();
-
-	if(isAuth)
-		db.pool
-			.query("SELECT * FROM feedback WHERE NOT reviewed ORDER BY time")
-			.then(unreviewed => {
-				res.render("pages/feedback", { isAuth: isAuth, unreviewed: unreviewed });
-			})
-			.catch(err => {
-				console.error(err.stack);
-				res.render("pages/feedback", { isAuth: isAuth, errors: [db.err_msg] });
-			});
-	else
-		db.pool
-			.query("SELECT * FROM states ORDER BY name")
-			.then(states => {
-				res.render("pages/feedback", { isAuth: isAuth, states: states });
-			})
-			.catch(err => {
-				console.error(err.stack);
-				res.render("pages/feedback", { isAuth: isAuth, errors: [db.err_msg] });
-			});
-};
 
 exports.post_feedback = [
 	body('location')
 		.trim()
-		.isLength({ min: 1, max: 128 }) // change to list of states
+		.isLength({ min: 1, max: 255 })
 		.withMessage('Location empty.')
 		.escape(),
-	body('content')
+	body('kitchen')
 		.trim()
-		.isLength({ min: 1, max: 4096 })
-		.withMessage('Feedback content empty.')
+		.isLength({ min: 1, max: 255 }) // isIn(kitchens)
+		.withMessage('Kitchen empty.')
+		.escape(),
+	body('temperature'),
+	body('delivery'),
+	body('comment')
+		.trim()
 		.escape(),
 	(req, res) => {
 		// check has sent feedback recently
+		// get last feedback sent by user, get time, check if less than 10min
 
 		const errors = validationResult(req);
 
+		//check if at least one is checkbox is ticked
+
 		if (errors.isEmpty())
-			db.pool.connect()
-				.then(client => {
-					return client
-						.query(`INSERT INTO feedback (id, time, content, location, reviewed)
-						VALUES(DEFAULT, DEFAULT, '${req.body.content}', '${req.body.location}', DEFAULT)`)
-						.then(() => {
-							client.release();
-							res.redirect("/post_feedback");
-						})
-						.catch(err => {
-							client.release();
-							console.log(err.stack);
-							res.render("pages/feedback", { isAuth: req.oidc.isAuthenticated(), errors: [db.err_msg] });
-						});
-				}); // replace by email to location ?
-		else
-			res.render("pages/feedback", { isAuth: req.oidc.isAuthenticated(), errors: errors.array() });
+			db.pool
+				.query(`
+					INSERT INTO feedback(id, time, comment, kitchen, delivery, temperature, email, location)
+					VALUES(
+						DEFAULT,
+						DEFAULT,
+					    '${req.body.comment}',
+				        '${req.body.kitchen}',
+				        '${typeof req.body.delivery != 'undefined' && req.body.delivery}',
+					    '${typeof req.body.temperature != 'undefined' && req.body.temperature}',
+					    '${req.oidc.user.email}',
+					    '${req.body.location}'
+					)
+				`)
+				.then(() => res.redirect("/dashboard#feedback"))
+				.catch(err => {
+					console.error(err.stack);
+					res.render(
+						"pages/dashboard",
+						{ isAuth: req.oidc.isAuthenticated(), user: req.oidc.user, kitchens: kitchens, errors: [{ 'msg' : db.err_msg}] }
+					);
+				});
+		else {
+			console.error(errors.array());
+			res.render(
+				"pages/dashboard",
+				{ isAuth: req.oidc.isAuthenticated(), user: req.oidc.user, kitchens: kitchens, errors: errors.array() }
+			);
+		}
 	}
 ];

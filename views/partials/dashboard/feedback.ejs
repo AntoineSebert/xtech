@@ -1,68 +1,57 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <title>Feedback | Demeter</title>
-    <meta name="description" content="Get in touch with your local kitchen or our tech support service. Remarks, suggestions, complaints; make your voice heard.">
-    <%- include ("../partials/header.ejs") %>
-    <link rel="stylesheet" type="text/css" href="stylesheets/feedback.css">
-</head>
-
-<body class='d-flex flex-column h-100 bg-dark'>
-    <% current_page = "Feedback" %>
-    <%- include ("../partials/nav.ejs") %>
-
-    <div id='cover' class='px-3 vh-100 position-relative'>
+<section id=feedback class='d-none'>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Feedback</h1>
     </div>
-    <div class='position-absolute top-50 start-50 translate-middle col-md-8'>
-        <div class='row justify-content-center'>
-            <div class='col-3 me-3 align-self-center'>
-                <img src="img/erica-steeves-G_lwAp0TF38-unsplash.jpg" class="img-fluid rounded-3" alt="A hand holding a letter">
-            </div>
-            <div class='col-8 float-end text-white'>
-                <h2 class='display-4'>Feedback</h2>
 
-                <form action="/feedback" method="post">
-                    <div class="mb-3">
-                        <label for="location" class="form-label">Location</label><br>
-                        <select id="location" name="location" required class="form-select">
-                            <option value="">Select State/UTs</option>
-                            <% if (typeof states != 'undefined') {
-                            states.rows.forEach(function(s) { %>
-                                <option value="<%= s.name.toLowerCase().replace(/ /g, "_"); %>"><%= s.name %></option>
-                            <% });
-                            } %>
-                            <option value="MDM Tech Support">MDM Tech Support</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Your feedback</label><br>
-                        <textarea
-                                id="content" name="content"
-                                rows="4" cols="50"
-                                spellcheck=true
-                                minlength=1 maxlength='4096'
-                                aria-describedby="feedbackHelpBlock"
-                                class="form-control"
-                                required></textarea>
-                        <div id="feedbackHelpBlock" class="form-text text-white">
-                            Please tell us about the problem you encountered or the quality of the service to help us optimize your experience.
-                        </div>
-                    </div>
-                    <input type="submit" value="Submit" class='btn btn-outline-light btn-lg'>
-                </form>
-            </div>
-            <% if (typeof errors == 'object') { %>
-                <ul>
-                    <% errors.forEach(function(e) { %>
-                        <li><%= e.msg %></li>
-                    <% }); %>
-                </ul>
-            <% } %>
+    <form class="row g-3" action="/feedback" method="post">
+        <div class="col-md-6">
+            <label for="location" class="form-label">Your location</label>
+            <input type='text' name='location' class="form-control" id="location" required>
         </div>
-    </div>
+        <div class="col-md-6">
+            <label for="kitchen" class="form-label">Kitchen</label><br>
+            <select id="kitchen" name="kitchen" required class="form-select">
+                <option value="">Select a kitchen</option>
+                    <% if (typeof kitchens != 'undefined') {
+                    kitchens.rows.forEach(function(k) { %>
+                        <option value="<%= k.location %>"><%= k.location %></option>
+                    <% });
+                    } %>
+            </select>
+        </div>
+        <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name='temperature' id="temperature">
+                <label class="form-check-label" for="temperature">Food temperature above 62°</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name='delivery' id="delivery">
+                <label class="form-check-label" for="delivery">Delivery time over three hours</label>
+            </div>
+        </div>
+        <div class="col-6">
+            <label for="comment" class="form-label">Comments (optional)</label><br>
+            <textarea
+                    id="comment" name="comment"
+                    rows=2
+                    spellcheck=true
+                    minlength=1 maxlength='2048'
+                    aria-describedby="feedbackHelpBlock"
+                    class="form-control"></textarea>
+            <div id="feedbackHelpBlock" class="form-text text-white">
+                Please tell us about the problem you encountered or the quality of the service to help us optimize your experience.
+            </div>
+        </div>
+        <div class="col-12">
+            <input type="submit" value="Submit" class='btn btn-outline-primary'>
+        </div>
+    </form>
 
-    <% photo_credit = 'Photos by <a href="https://unsplash.com/@ecees?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">erica steeves</a>' +
-            ' and <a href="https://unsplash.com/@danielcgold?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Dan Gold</a>' +
-            ' on <a href="https://unsplash.com/s/photos/mail?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>'; %>
-    <%- include ("../partials/footer.ejs") %>
-</body>
+    <% if (typeof errors == 'object') { %>
+        <ul>
+            <% errors.forEach(function(e) { %>
+                <li><%= e.msg %></li>
+            <% }); %>
+        </ul>
+    <% } %>
+</section>
