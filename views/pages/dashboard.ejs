@@ -5,24 +5,21 @@
     <meta name="description" content="On this page you can manage the nutrition platform for your organization and access the features you need.">
     <%- include ("../partials/header.ejs") %>
     <link rel="stylesheet" type="text/css" href="stylesheets/dashboard.css">
+    <script async defer src='scripts/dashboard.js' type='application/javascript'></script>
 </head>
 
 <body class='d-flex flex-column h-100 bg-white'>
     <% current_page = "Dashboard" %>
     <%- include ("../partials/nav.ejs") %>
 
-    <noscript>
-        <!-- pop up JS -->
-    </noscript>
-
     <div class='container-fluid vh-100'>
         <div class="row h-100">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <img src="img/AP-blue.png" class="img-fluid mt-3" alt="Logo of Akshaya Patra">
                 <div class="position-sticky pt-3">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item border-bottom">
-                            <a class="nav-link active" aria-current="page" href="#">
+                            <a class="nav-link active" aria-current="page" href="#" onclick='toggle(this)' data-name=account>
                                 <svg class="bi" width="24" height="24" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#house"/>
                                 </svg>
@@ -30,7 +27,7 @@
                             </a>
                         </li>
                         <li class="nav-item border-bottom">
-                            <a class="nav-link link-secondary" href="#">
+                            <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=feedback>
                                 <svg class="bi" width="24" height="24" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#chat-left-quote"/>
                                 </svg>
@@ -38,7 +35,7 @@
                             </a>
                         </li>
                         <li class="nav-item border-bottom">
-                            <a class="nav-link link-secondary" href="#">
+                            <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=policies>
                                 <svg class="bi" width="24" height="24" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#file-text"/>
                                 </svg>
@@ -46,7 +43,7 @@
                             </a>
                         </li>
                         <li class="nav-item border-bottom">
-                            <a class="nav-link link-secondary" href="#">
+                            <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=recipe-planner>
                                 <svg class="bi" width="24" height="24" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#journal-text"/>
                                 </svg>
@@ -54,7 +51,7 @@
                             </a>
                         </li>
                         <li class="nav-item border-bottom">
-                            <a class="nav-link link-secondary" href="#">
+                            <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=ingredients-recipes>
                                 <svg class="bi" width="24" height="24" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#server"/>
                                 </svg>
@@ -63,7 +60,7 @@
                         </li>
 
                         <li class="nav-item border-bottom">
-                            <a class="nav-link link-secondary" href="/dashboard?calculator">
+                            <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=basket-calculator>
                                 <svg class="bi" width="24" height="24" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#basket"/>
                                 </svg>
@@ -71,7 +68,7 @@
                             </a>
                         </li>
                         <li class="nav-item border-bottom">
-                            <a class="nav-link link-secondary" href="#">
+                            <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=nutrition-compliance>
                                 <svg class="bi" width="24" height="24" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#clipboard-check"/>
                                 </svg>
@@ -79,7 +76,7 @@
                             </a>
                         </li>
                         <li class="nav-item border-bottom">
-                            <a class="nav-link link-secondary" href="#">
+                            <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=last-mile-delivery>
                                 <svg class="bi" width="24" height="24" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#truck"/>
                                 </svg>
@@ -93,12 +90,14 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <%- include ("../partials/dashboard/account.ejs") %>
                 <%- include ("../partials/dashboard/basket_calculator.ejs") %>
+                <%- include ("../partials/dashboard/feedback.ejs") %>
                 <%- include ("../partials/dashboard/ingredients_and_recipes.ejs") %>
                 <%- include ("../partials/dashboard/last_mile_delivery.ejs") %>
+                <%- include ("../partials/dashboard/nutrition_compliance.ejs") %>
+                <%- include ("../partials/dashboard/policies.ejs") %>
                 <%- include ("../partials/dashboard/recipe_planner.ejs") %>
             </main>
         </div>
-
     </div>
 
     <%- include ("../partials/footer.ejs") %>

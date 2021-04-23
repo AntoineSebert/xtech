@@ -47,6 +47,9 @@ app.use(express.static(path.join(__dirname, "public"), {
 	.set("views", path.join(__dirname, "views"))
 	.set("view engine", "ejs");
 
+const dashboard = require("./controllers/dashboard");
+const feedback = require("./controllers/feedback");
+
 const router = express.Router()
 	// PUBLIC SECTION
 	.get('/', (req, res) =>
@@ -68,9 +71,8 @@ const router = express.Router()
 		res.render("pages/terms-of-service", req.oidc.isAuthenticated()
 			? { isAuth: true, user: req.oidc.user } : { isAuth: false }))
 	// PRIVATE SECTION
-	.get("/dashboard", requiresAuth(), (req, res) =>
-		res.render("pages/dashboard", req.oidc.isAuthenticated()
-			? { isAuth: true, user: req.oidc.user } : { isAuth: false }));
+	.post("/feedback", requiresAuth(), feedback.post_feedback)
+	.get("/dashboard", requiresAuth(), dashboard.get_dashboard);
 
 app.use(router);
 
