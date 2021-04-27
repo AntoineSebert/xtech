@@ -40,16 +40,23 @@ exports.post_feedback = [
 					    '${req.body.location}'
 					)
 				`)
-				.then(() => res.redirect("/dashboard#feedback"))
+				.then(() => res.redirect("/dashboard#feedback")) // add success operation
 				.catch(err => {
 					console.error(err.stack);
+					// check view
 					res.render(
 						"pages/dashboard",
-						{ isAuth: req.oidc.isAuthenticated(), user: req.oidc.user, kitchens: kitchens, errors: [{ 'msg' : db.err_msg}] }
+						{
+							isAuth: req.oidc.isAuthenticated(),
+							user: req.oidc.user,
+							kitchens: kitchens,
+							errors: [{ msg : db.err_msg}]
+						}
 					);
 				});
 		else {
 			console.error(errors.array());
+			// check view
 			res.render(
 				"pages/dashboard",
 				{ isAuth: req.oidc.isAuthenticated(), user: req.oidc.user, kitchens: kitchens, errors: errors.array() }

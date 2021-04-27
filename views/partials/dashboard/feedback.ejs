@@ -47,7 +47,7 @@
         </div>
     </form>
 
-    <% if (typeof errors == 'object') { %>
+    <% if (typeof errors != 'undefined') { %>
         <ul>
             <% errors.forEach(function(e) { %>
                 <li><%= e.msg %></li>
