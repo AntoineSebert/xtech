@@ -1,8 +1,35 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/policies.css">
+
 <section id='policies' class='d-none'>
-    <ul>
-        <li></li>
-        <li>Download <a href="/files/amazing.txt">amazing.txt</a>.</li>
-        <li>Download <a href="/files/missing.txt">missing.txt</a>.</li>
-        <li>Download <a href="/files/CCTV大赛上海分赛区.txt">CCTV大赛上海分赛区.txt</a>.</li>
-    </ul>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Policies Guidelines Monitor</h1>
+    </div>
+    <% if (typeof feedbacks != 'undefined') {
+    	if (0 < feedbacks.length) { %>
+            <ol class="list-group list-group-numbered overflow-auto">
+                <% feedbacks.forEach(function(f){ %>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold"><%= f.location %></div>
+                            <%= f.state %>
+                        </div>
+                        <span class="badge <%= f.delivery === '0' ? 'bg-success' : 'bg-danger' %> rounded-pill ms-2">
+                            Delivery : <%= f.delivery %>
+                        </span>
+                        <span class="badge <%= f.temperature === '0' ? 'bg-success' : 'bg-danger' %> rounded-pill ms-2">
+                            Temperature : <%= f.temperature %>
+                        </span>
+                    </li>
+                <% }); %>
+            </ol>
+        <% } else { %>
+            <p class='text-muted'>No feedback to show.</p>
+        <% } %>
+    <% } else if (typeof errors != 'undefined') { %>
+        <ul>
+            <% errors.forEach(function(e) { %>
+                <li><%= e.msg %></li>
+            <% }); %>
+        </ul>
+    <% } %>
 </section>
