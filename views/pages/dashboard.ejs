@@ -8,86 +8,98 @@
     <script async defer src='scripts/dashboard.js' type='application/javascript'></script>
 </head>
 
-<body class='d-flex flex-column h-100 bg-white'>
+<body class='d-flex flex-column h-100 bg-white overflow-hidden'>
     <% current_page = "Dashboard" %>
     <%- include ("../partials/nav.ejs") %>
 
     <div class='container-fluid vh-100'>
         <div class="row h-100">
             <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <img src="img/AP-blue.png" class="img-fluid mt-3" alt="Logo of Akshaya Patra">
                 <div class="position-sticky pt-3">
+                    <img src="img/AP-blue.png" class="img-fluid mb-3" alt="Logo of Akshaya Patra">
                     <ul class="nav nav-pills flex-column">
-                        <li class="nav-item border-bottom">
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#" onclick='toggle(this)' data-name=account>
-                                <svg class="bi" width="24" height="24" fill="currentColor">
+                                <svg class="bi me-2" width="18" height="18" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#house"/>
                                 </svg>
                                 Welcome
                             </a>
                         </li>
-                        <li class="nav-item border-bottom">
+                    </ul>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-uppercase">
+                        planning
+                    </h6>
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
                             <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=feedback>
-                                <svg class="bi" width="24" height="24" fill="currentColor">
+                                <svg class="bi me-2" width="18" height="18" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#chat-left-quote"/>
                                 </svg>
                                 Feedback
                             </a>
                         </li>
-                        <li class="nav-item border-bottom">
-                            <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=policies>
-                                <svg class="bi" width="24" height="24" fill="currentColor">
-                                    <use xlink:href="img/bootstrap-icons.svg#file-text"/>
-                                </svg>
-                                Policy Guidelines
-                            </a>
-                        </li>
-                        <li class="nav-item border-bottom">
+                        <li class="nav-item">
                             <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=recipe-planner>
-                                <svg class="bi" width="24" height="24" fill="currentColor">
+                                <svg class="bi me-2" width="18" height="18" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#journal-text"/>
                                 </svg>
                                 Recipe Planner
                             </a>
                         </li>
-                        <li class="nav-item border-bottom">
+                        <li class="nav-item">
                             <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=ingredients-recipes>
-                                <svg class="bi" width="24" height="24" fill="currentColor">
+                                <svg class="bi me-2" width="18" height="18" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#server"/>
                                 </svg>
                                 Ingredients & Recipes
                             </a>
                         </li>
 
-                        <li class="nav-item border-bottom">
+                        <li class="nav-item">
                             <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=basket-calculator>
-                                <svg class="bi" width="24" height="24" fill="currentColor">
+                                <svg class="bi me-2" width="18" height="18" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#basket"/>
                                 </svg>
                                 Food Basket Calculator
                             </a>
                         </li>
-                        <li class="nav-item border-bottom">
+                    </ul>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-uppercase">
+                        monitoring
+                    </h6>
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
                             <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=nutrition-compliance>
-                                <svg class="bi" width="24" height="24" fill="currentColor">
+                                <svg class="bi me-2" width="18" height="18" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#clipboard-check"/>
                                 </svg>
                                 Nutrition Compliance Monitor
                             </a>
                         </li>
-                        <li class="nav-item border-bottom">
+                        <li class="nav-item">
                             <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=last-mile-delivery>
-                                <svg class="bi" width="24" height="24" fill="currentColor">
+                                <svg class="bi me-2" width="18" height="18" fill="currentColor">
                                     <use xlink:href="img/bootstrap-icons.svg#truck"/>
                                 </svg>
                                 Last Mile Delivery Monitor
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="#" onclick='toggle(this)' data-name=policies>
+                                <svg class="bi me-2" width="18" height="18" fill="currentColor">
+                                    <use xlink:href="img/bootstrap-icons.svg#file-text"/>
+                                </svg>
+                                Policy Guidelines Monitor
                             </a>
                         </li>
                     </ul>
                 </div>
             </nav>
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-hidden">
                 <%- include ("../partials/dashboard/account.ejs") %>
                 <%- include ("../partials/dashboard/basket_calculator.ejs") %>
                 <%- include ("../partials/dashboard/feedback.ejs") %>
