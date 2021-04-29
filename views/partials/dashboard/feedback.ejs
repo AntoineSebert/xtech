@@ -48,9 +48,9 @@
     </form>
 
     <% if (typeof errors != 'undefined') { %>
-        <ul>
+        <ul class='mt-5 list-group'>
             <% errors.forEach(function(e) { %>
-                <li><%= e.msg %></li>
+                <li  class="list-group-item list-group-item-danger"><%= e.msg %></li>
             <% }); %>
         </ul>
     <% } %>
