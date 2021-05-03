@@ -9,10 +9,77 @@ where are from, where we are now
     <title>About Us | Demeter</title>
     <meta name="description" content="About Us page">
     <%- include ("../partials/header.ejs") %>
+    <link rel="stylesheet" type="text/css" href="public/stylesheets/about-us.css">
 </head>
 
 <body class='d-flex flex-column h-100 bg-dark'>
-<% current_page = "About Us" %>
-<%- include ("../partials/nav.ejs") %>
-<%- include ("../partials/footer.ejs") %>
+    <% current_page = "About Us" %>
+
+    <%- include ("../partials/nav.ejs") %>
+
+    <div class="team-section">
+        <h1>Our Team</h1>
+        <span class="border"></span>
+        <div class="ps">
+            <a href="#p1"><img src="public/img/Antoine.jpg" alt=""></a>
+            <a href="#p2"><img src="public/img/Alvaro.jpg" alt=""></a>
+            <a href="#p3"><img src="public/img/Lasse.jpg" alt=""></a>
+            <a href="#p4"><img src="public/img/Sai.jpg" alt=""></a>
+            <a href="#p5"><img src="public/img/Alex.jpg" alt=""></a>
+        </div>
+
+        <div class="section" id="p1">
+            <span class="name">Antoine</span>
+            <span class="border"></span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
+                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
+                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
+                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
+                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
+        </div>
+
+        <div class="section" id="p2">
+            <span class="name">Alvaro</span>
+            <span class="border"></span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
+                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
+                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
+                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
+                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
+        </div>
+
+        <div class="section" id="p3">
+            <span class="name">Lasse</span>
+            <span class="border"></span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
+                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
+                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
+                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
+                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
+        </div>
+
+        <div class="section" id="p4">
+            <span class="name">Sai</span>
+            <span class="border"></span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
+                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
+                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
+                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
+                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
+        </div>
+
+        <div class="section" id="p5">
+            <span class="name">Alex</span>
+            <span class="border"></span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
+                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
+                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
+                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
+                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
+        </div>
+
+
+    </div>
+
+    <%- include ("../partials/footer.ejs") %>
 </body>
