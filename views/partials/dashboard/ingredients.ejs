@@ -1,0 +1,75 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/ingredients.css">
+
+<section id='ingredients' class='d-none'>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Database of ingredients & recipes</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <button id='add-button' type="button" class="btn btn-sm btn-outline-success">
+                <svg class="bi d-block mx-auto" width="20" height="20" fill="currentColor">
+                    <use xlink:href="img/bootstrap-icons.svg#plus-circle"/>
+                </svg>
+            </button>
+            <div class="btn-group mx-2">
+                <button type="button" class="btn btn-sm btn-outline-primary">
+                    <svg class="bi d-block mx-auto" width="20" height="20" fill="currentColor">
+                        <use xlink:href="img/bootstrap-icons.svg#pencil-square"/>
+                    </svg>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger">
+                    <svg class="bi d-block mx-auto" width="20" height="20" fill="currentColor">
+                        <use xlink:href="img/bootstrap-icons.svg#trash"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <% if (typeof ingredients != 'undefined') {
+        if (0 < ingredients.rows.length) { %>
+            <div id='simple-wrapper' class='overflow-auto'>
+                <table class="table table-striped table-hover table-sm">
+                    <thead>
+                    <tr>
+                        <% ingredients.fields.forEach(function(f){
+                        if (f.name !== 'id') { %>
+                            <th class="text-capitalize" scope="col">
+                                <%= f.name %>
+                                <% if (f.name !== 'name') { %>
+                                    <%= '(' + ingredients['units'][f.name] + ')' %>
+                                <% } %>
+                            </th>
+                        <% }
+                        }); %>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% ingredients.rows.forEach(function(i) { %>
+                        <tr id='<%= i['id'] %>'>
+                            <% for (const [key, value] of Object.entries(i)) {
+                                if (key !== 'id') {
+                                    if (key === 'name') { %>
+                                        <th scope="row">
+                                            <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                            <%= value %>
+                                        </th>
+                                    <% } else { %>
+                                        <td><%= value %></td>
+                                    <% }
+                                }
+                            } %>
+                        </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <p class='text-muted'>No ingredients to show.</p>
+        <% }
+    } else if (typeof errors != 'undefined') { %>
+        <ul>
+            <% errors.forEach(function(e) { %>
+                <li><%= e.msg %></li>
+            <% }); %>
+        </ul>
+    <% } %>
+</section>
