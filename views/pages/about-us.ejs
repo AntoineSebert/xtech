@@ -8,78 +8,76 @@ where are from, where we are now
 <head>
     <title>About Us | Demeter</title>
     <meta name="description" content="About Us page">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
     <%- include ("../partials/header.ejs") %>
-    <link rel="stylesheet" type="text/css" href="public/stylesheets/about-us.css">
 </head>
 
 <body class='d-flex flex-column h-100 bg-dark'>
-    <% current_page = "About Us" %>
+<% current_page = "About Us" %>
 
-    <%- include ("../partials/nav.ejs") %>
+<%- include ("../partials/nav.ejs") %>
 
-    <div class="team-section">
-        <h1>Our Team</h1>
-        <span class="border"></span>
-        <div class="ps">
-            <a href="#p1"><img src="public/img/Antoine.jpg" alt=""></a>
-            <a href="#p2"><img src="public/img/Alvaro.jpg" alt=""></a>
-            <a href="#p3"><img src="public/img/Lasse.jpg" alt=""></a>
-            <a href="#p4"><img src="public/img/Sai.jpg" alt=""></a>
-            <a href="#p5"><img src="public/img/Alex.jpg" alt=""></a>
+<div class="container">
+    <div class="row">
+        <!-- Team Member 1 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow">
+                <img src="public/img/Antoine.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-0">Antoine</h5>
+                    <div class="card-text text-black-50">Web Developer</div>
+                </div>
+            </div>
         </div>
-
-        <div class="section" id="p1">
-            <span class="name">Antoine</span>
-            <span class="border"></span>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
-                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
-                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
-                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
-                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
+        <!-- Team Member 2 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow">
+                <img src="public/img/Alex.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-0">Alex</h5>
+                    <div class="card-text text-black-50">Web Developer</div>
+                </div>
+            </div>
         </div>
-
-        <div class="section" id="p2">
-            <span class="name">Alvaro</span>
-            <span class="border"></span>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
-                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
-                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
-                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
-                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
+        <!-- Team Member 3 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow">
+                <img src="public/img/Alvaro.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-0">Alvaro</h5>
+                    <div class="card-text text-black-50">Web Developer</div>
+                </div>
+            </div>
         </div>
-
-        <div class="section" id="p3">
-            <span class="name">Lasse</span>
-            <span class="border"></span>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
-                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
-                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
-                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
-                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
+        <!-- Team Member 4 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow">
+                <img src="public/img/Sai.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-0">Sai</h5>
+                    <div class="card-text text-black-50">Web Developer</div>
+                </div>
+            </div>
         </div>
-
-        <div class="section" id="p4">
-            <span class="name">Sai</span>
-            <span class="border"></span>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
-                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
-                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
-                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
-                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
+        <!-- Team Member 3 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow">
+                <img src="public/img/Lasse.jpg" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-0">Lasse</h5>
+                    <div class="card-text text-black-50">Web Developer</div>
+                </div>
+            </div>
         </div>
-
-        <div class="section" id="p5">
-            <span class="name">Alex</span>
-            <span class="border"></span>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero dui, vestibulum et tortor quis,
-                semper faucibus dolor. Aenean eget ligula felis. Vestibulum viverra est sit amet nulla luctus pretium.
-                Pellentesque fermentum vel massa quis faucibus. Suspendisse at dignissim sapien. Integer tempor enim id
-                mi bibendum faucibus non sed ante. Cras vel lacus aliquet, vulputate est sit amet, vehicula enim. Cras
-                egestas ullamcorper eros quis vestibulum. In et ex nec justo lobortis tempor.</p>
-        </div>
-
-
     </div>
+    <!-- /.row -->
 
-    <%- include ("../partials/footer.ejs") %>
+</div>
+
+
+<%- include ("../partials/footer.ejs") %>
 </body>
