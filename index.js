@@ -41,6 +41,7 @@ app.use(auth(config));
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public"), {
 	setHeaders: (res, path, stat) => res.set('Permissions-Policy', 'interest-cohort=()')
 }))
@@ -49,6 +50,7 @@ app.use(express.static(path.join(__dirname, "public"), {
 
 const dashboard = require("./controllers/dashboard");
 const feedback = require("./controllers/feedback");
+const { addIngredients, deleteIngredients, getIngredients } = require("./controllers/ingredients");
 
 const router = express.Router()
 	// PUBLIC SECTION
@@ -72,6 +74,9 @@ const router = express.Router()
 			? { isAuth: true, user: req.oidc.user } : { isAuth: false }))
 	// PRIVATE SECTION
 	.post("/feedback", requiresAuth(), feedback.post_feedback)
+	.post("/ingredients", requiresAuth(), addIngredients)
+	//.get("/ingredients", requiresAuth(), getIngredients)
+	.post("/ingredients/delete", requiresAuth(), deleteIngredients)
 	.get("/dashboard", requiresAuth(), dashboard.get_dashboard);
 
 app.use(router);
