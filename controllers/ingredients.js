@@ -1,8 +1,8 @@
 const { body, validationResult } = require('express-validator');
-const { query } = require('../db');
+const { query, err_msg } = require('../db');
 
 module.exports = {
-	getIngredients: async () => {
+	getIngredients: async (req, res) => {
 		const ingredients = await query("select * from ingredients order by name");
 		const ingredientsComments = await query(`
 			SELECT c.table_schema,c.table_name,c.column_name,pgd.description
@@ -22,7 +22,6 @@ module.exports = {
 
 		return ingredients;
 	},
-
 	deleteIngredients: [
 		async (req, res) => {
 			let errors = [];
@@ -32,40 +31,55 @@ module.exports = {
 			if(!validationErrors.isEmpty())
 				errors.concat(validationErrors.array());
 
-			// escape !
-			await query(`DELETE FROM ingredients WHERE id IN ('${req.body.ids.join('\',\'')}')`)
-				.then(result => {
-					console.log(result);
-
-					return res.redirect('dashboard#ingredient');
-				})
-				.catch(err => {
-					console.error(err.stack);
-					errors.push(err.stack);
-				});
-
-			return res.redirect('dashboard#ingredient');
+			if(errors.length === 0)
+				await query(`DELETE FROM ingredients WHERE id IN ($1)`, [req.body.ids.join('\',\'')])
+					.then(result => res.json({'deleted': result.rowCount}))
+					.catch(err => {
+						console.error(err.stack);
+						errors.push(err.stack);
+						res.status(400).json({'errors': errors});
+					});
+			else
+				res.status(400).json({'errors': errors});
 		}
 	],
+	addIngredient: [
+		body('name')
+			.trim()
+			.isLength({ min: 1, max: 64 })
+			.toLowerCase()
+			.escape(),
+		body(['energy', 'protein', 'water', 'ash', 'fat', 'carbs']).isNumeric(),
+		body('cost').isCurrency(),
+		async (req, res) => {
+			let errors = [];
+			const validationErrors = validationResult(req);
 
-	addIngredients: async (i) => {
-		const result = await query(`
-			INSERT INTO ingredients (id, name, energy, protein, water, ash, fat, carbs, cost)
-			VALUES (
-			        DEFAULT,
-			        ${i['name'].toLowerCase()},
-			        ${i['energy']},
-			        ${i['protein']},
-			        ${i['water']},
-			        ${i['ash']},
-			        ${i['fat']},
-			        ${i['carbs']},
-			        ${i['cost']}
-			)
-		`);
+			if(!validationErrors.isEmpty())
+				errors.concat(validationErrors.array());
 
-		console.log(result);
-
-		return 'Munich';
-	},
+			if(errors.length === 0)
+				query(
+					`INSERT INTO ingredients (id, name, energy, protein, water, ash, fat, carbs, cost)
+					VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)`,
+					[
+						req.body.name,
+						req.body.energy,
+						req.body.protein,
+						req.body.water,
+						req.body.ash,
+						req.body.fat,
+						req.body.carbs,
+						req.body.cost
+					]
+				)
+					.then(() => res.status(200))
+					.catch(err => {
+						console.error(err.stack);
+						res.status(400).json({'errors': err.detail});
+					});
+			else
+				res.status(400).json({'errors': errors});
+		}
+	],
 };

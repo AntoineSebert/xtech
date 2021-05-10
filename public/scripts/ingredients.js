@@ -19,25 +19,100 @@ async function postIngredient(url = '', data = {}) {
 }
 */
 
-function addIngredient() {
-	fetch('/ingredients')
-		.then(response => response.json())
-		.then(data => console.log(data));
+function createAlert() {
+	let alert = document.createElement('div');
+	alert.setAttribute('role', 'alert');
+	alert.classList.add("alert", "alert-dismissible", "fade", "show");
+
+	let button = document.createElement('button');
+	button.setAttribute('type', 'button');
+	button.setAttribute('data-bs-dismiss', 'alert');
+	button.setAttribute('aria-label', 'Close');
+	button.classList.add("btn-close");
+	alert.append(button);
+	
+	return alert;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+	for (let checkbox of document.querySelectorAll('#ingredients_table input[type=checkbox]:checked'))
+		checkbox.checked = false;
+});
 
 function deleteIngredients() {
-	let checkedIngredients = document.querySelectorAll('tbody input[type=checkbox]:checked');
-	let ids = Array.from(checkedIngredients.values()).map(i => i.value);
-	console.log(ids);
+	let ids = Array.from(document.querySelectorAll(
+		'#ingredients_table input[type=checkbox]:checked'
+	).values()).map(i => i.value);
 
-	const xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("POST", 'http://localhost:5000/ingredients/delete',true); // false for synchronous request
-	xmlHttp.setRequestHeader('Content-Type', 'application/json');
-	xmlHttp.send(JSON.stringify({'ids': ids}));
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", 'ingredients/delete',true);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(JSON.stringify({'ids': ids}));
 
-	return xmlHttp.responseText;
+	xhr.onload = function () {
+		if (xhr.readyState === xhr.DONE) {
+			const response = JSON.parse(xhr.response);
+			let alert = createAlert();
+			
+			switch (xhr.status) {
+				case 200:
+					const deleted = parseInt(response['deleted']);
+
+					if(deleted === 0) {
+						alert.classList.add("alert-warning");
+						alert.append(document.createTextNode('No row(s) has been removed.'));
+					} else {
+						alert.classList.add("alert-success");
+						alert.append(document.createTextNode(deleted + ' rows has been removed.'));
+					}
+
+					break;
+				default:
+					alert.classList.add("alert-danger");
+					alert.append(document.createTextNode('An error has occurred.'));
+			}
+
+			document.getElementById("alerts").append(alert);
+		}
+	};
 }
 
-function addEditableEmptyRow() {
+function addIngredient(form) {
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", 'ingredients/add',true);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(JSON.stringify({
+		'name': form.elements.name.value,
+		'energy': form.elements.energy.value,
+		'protein': form.elements.protein.value,
+		'water': form.elements.water.value,
+		'ash': form.elements.ash.value,
+		'fat': form.elements.fat.value,
+		'carbs': form.elements.carbs.value,
+		'cost': form.elements.cost.value,
+	}));
 
+	xhr.onload = function () {
+		if (xhr.readyState === xhr.DONE) {
+			let alert = createAlert();
+
+			switch (xhr.status) {
+				case 200:
+					alert.classList.add("alert-success");
+					alert.append(document.createTextNode('The ingredient has been added.'));
+					break;
+				default:
+					const response = JSON.parse(xhr.response);
+					alert.classList.add("alert-danger");
+					alert.append(document.createTextNode('Error: ' + response['errors']));
+			}
+
+			document.getElementById("alerts").append(alert);
+		}
+	};
+}
+
+function toggleNew() {
+	let form = document.getElementById("newIngredient");
+	form.hidden = !form.hidden;
 }
