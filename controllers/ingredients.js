@@ -1,10 +1,11 @@
 const { body, validationResult } = require('express-validator');
-const { query, err_msg } = require('../db');
+const { query } = require('../db');
 
 module.exports = {
 	getIngredients: async (req, res) => {
-		const ingredients = await query("select * from ingredients order by name");
-		const ingredientsComments = await query(`
+		try {
+			const ingredients = await query("select * from ingredients order by name");
+			const ingredientsComments = await query(`
 			SELECT c.table_schema,c.table_name,c.column_name,pgd.description
 			FROM pg_catalog.pg_statio_all_tables as st
 			    inner join pg_catalog.pg_description pgd on (pgd.objoid=st.relid)
@@ -13,16 +14,23 @@ module.exports = {
 			            and c.table_schema=st.schemaname
 			            and c.table_name=st.relname
 			            and c.table_name = 'ingredients')
-		`);
-		ingredients['units'] = Object.fromEntries(
-			ingredientsComments.rows.map(r => [r['column_name'], r['description']])
-		);
+			`);
 
-		console.log("here");
+			ingredients['units'] = Object.fromEntries(
+				ingredientsComments.rows.map(r => [r['column_name'], r['description']])
+			);
 
-		return ingredients;
+			console.log("here");
+
+			res.json({'ingredients': ingredients});
+		} catch(err) {
+			console.error(err.stack);
+			res.status(400).json({'errors': err.detail});
+		}
 	},
 	deleteIngredients: [
+		body('ids').isArray(),
+		body('ids').custom(value => value.forEach(e => e.isUUID(4))),
 		async (req, res) => {
 			let errors = [];
 
@@ -32,11 +40,11 @@ module.exports = {
 				errors.concat(validationErrors.array());
 
 			if(errors.length === 0)
-				await query(`DELETE FROM ingredients WHERE id IN ($1)`, [req.body.ids.join('\',\'')])
+				await query(`DELETE FROM ingredients WHERE id IN ('${req.body.ids.join('\',\'')}')`)
 					.then(result => res.json({'deleted': result.rowCount}))
 					.catch(err => {
 						console.error(err.stack);
-						errors.push(err.stack);
+						errors.push(err.detail);
 						res.status(400).json({'errors': errors});
 					});
 			else
@@ -45,6 +53,7 @@ module.exports = {
 	],
 	addIngredient: [
 		body('name')
+			.isAlpha()
 			.trim()
 			.isLength({ min: 1, max: 64 })
 			.toLowerCase()
@@ -73,13 +82,16 @@ module.exports = {
 						req.body.cost
 					]
 				)
-					.then(() => res.status(200))
+					.then((result) => res.json({'added': result.rowCount}))
 					.catch(err => {
 						console.error(err.stack);
-						res.status(400).json({'errors': err.detail});
+						errors.push(err.detail);
+						res.status(400).json({'errors': errors});
 					});
-			else
+			else {
+				console.error(errors);
 				res.status(400).json({'errors': errors});
+			}
 		}
 	],
 };
