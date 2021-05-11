@@ -24,9 +24,10 @@ exports.post_feedback = [
 		await query(`
 			SELECT *
 			FROM feedback
-			WHERE email = '${req.oidc.user.email}' AND time >= (NOW() - INTERVAL '1 hour')
+			WHERE email = $1 AND time >= (NOW() - INTERVAL '1 hour')
 			ORDER BY time DESC
-		`)
+		`,
+		[req.oidc.user.email])
 			.then(result => {
 				if(result.rows.length > 0)
 					errors.push(
@@ -49,14 +50,22 @@ exports.post_feedback = [
 				VALUES(
 					DEFAULT,
 					DEFAULT,
-				    '${req.body.comment}',
-			        '${req.body.kitchen}',
-			        '${typeof req.body.delivery != 'undefined' && req.body.delivery}',
-				    '${typeof req.body.temperature != 'undefined' && req.body.temperature}',
-				    '${req.oidc.user.email}',
-				    '${req.body.location}'
-				)
-			`)
+				    $1,
+			        $2,
+			        $3,
+				    $4,
+				    $5,
+				    $6
+				)`,
+			[
+				req.body.comment,
+				req.body.kitchen,
+				typeof req.body.delivery != 'undefined' && req.body.delivery,
+				typeof req.body.temperature != 'undefined' && req.body.temperature,
+				req.oidc.user.email,
+				req.body.location
+			]
+			)
 				.then(() => res.redirect("/dashboard#feedback")) // add success operation
 				.catch(err => {
 					console.error(err.stack);
