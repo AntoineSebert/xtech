@@ -36,7 +36,7 @@ exports.post_feedback = [
 			})
 			.catch(err => {
 				console.error(err.stack);
-				errors.push(err.stack);
+				errors.push(err.detail);
 			});
 
 		const validationErrors = validationResult(req);
@@ -45,8 +45,8 @@ exports.post_feedback = [
 			errors.concat(validationErrors.array());
 
 		if(errors.length === 0)
-			query(`
-				INSERT INTO feedback(id, time, comment, kitchen, delivery, temperature, email, location)
+			query(
+				`INSERT INTO feedback(id, time, comment, kitchen, delivery, temperature, email, location)
 				VALUES(
 					DEFAULT,
 					DEFAULT,
@@ -57,14 +57,14 @@ exports.post_feedback = [
 				    $5,
 				    $6
 				)`,
-			[
-				req.body.comment,
-				req.body.kitchen,
-				typeof req.body.delivery != 'undefined' && req.body.delivery,
-				typeof req.body.temperature != 'undefined' && req.body.temperature,
-				req.oidc.user.email,
-				req.body.location
-			]
+				[
+					req.body.comment,
+					req.body.kitchen,
+					typeof req.body.delivery != 'undefined' && req.body.delivery,
+					typeof req.body.temperature != 'undefined' && req.body.temperature,
+					req.oidc.user.email,
+					req.body.location
+				]
 			)
 				.then(() => res.redirect("/dashboard#feedback")) // add success operation
 				.catch(err => {
