@@ -51,6 +51,7 @@ app.use(express.static(path.join(__dirname, "public"), {
 const dashboard = require("./controllers/dashboard");
 const feedback = require("./controllers/feedback");
 const { addIngredient, deleteIngredients, getIngredients } = require("./controllers/ingredients");
+const { addRecipe, deleteRecipes, getRecipes } = require("./controllers/recipe_planner");
 
 const router = express.Router()
 	// PUBLIC SECTION
@@ -74,9 +75,12 @@ const router = express.Router()
 			? { isAuth: true, user: req.oidc.user } : { isAuth: false }))
 	// PRIVATE SECTION
 	.post("/feedback", requiresAuth(), feedback.post_feedback)
-	//.get("/ingredients", requiresAuth(), getIngredients)
 	.post("/ingredients/delete", requiresAuth(), deleteIngredients)
 	.post("/ingredients/add", requiresAuth(), addIngredient)
+	.get("/ingredients", requiresAuth(), getIngredients)
+	.post("/recipe/add", requiresAuth(), addRecipe)
+	.post("/recipe/delete", requiresAuth(), deleteRecipes)
+	.get("/recipe", requiresAuth(), getRecipes)
 	.get("/dashboard", requiresAuth(), dashboard.get_dashboard);
 
 app.use(router);
