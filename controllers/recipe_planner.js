@@ -56,24 +56,18 @@ module.exports = {
 			e => e.trim().isLength({ min: 1, max: 255 }).escape()
 		)),
 		async (req, res) => {
-			let errors = [];
 			const validationErrors = validationResult(req);
-
-			if(!validationErrors.isEmpty())
-				errors.concat(validationErrors.array());
-
 			const normalized = req.body.names.map(e => e.toLowerCase());
 
-			if(errors.length === 0)
+			if(validationErrors.isEmpty())
 				await query(`DELETE FROM recipes WHERE name IN ($1)`, [normalized.join('\',\'')])
 					.then(result => res.json({'deleted': result.rowCount}))
 					.catch(err => {
 						console.error(err.stack);
-						errors.push(err.detail);
-						res.status(400).json({'errors': errors});
+						res.status(400).json({'errors': err.detail});
 					});
 			else
-				res.status(400).json({'errors': errors});
+				res.status(400).json({'errors': validationErrors.array()});
 		}
 	],
 };
