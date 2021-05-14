@@ -8,6 +8,6 @@ const pool = new Pool({
 
 module.exports = {
 	query: (text, params) => pool.query(text, params),
-	get_client: () => pool.connect(),
+	pool: () => pool,
 	err_msg: "An error occurred while retrieving the data from the database",
 };
