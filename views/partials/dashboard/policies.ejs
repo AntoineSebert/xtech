@@ -6,8 +6,8 @@
     </div>
     <% if (typeof feedbacks != 'undefined') {
     	if (0 < feedbacks.length) { %>
-            <ul class="list-group overflow-auto">
-                <% feedbacks.forEach(function(f){ %>
+            <ol class="list-group overflow-auto">
+                <% feedbacks.forEach(function(f) { %>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold"><%= f.location %></div>
@@ -21,7 +21,7 @@
                         </span>
                     </li>
                 <% }); %>
-            </ul>
+            </ol>
         <% } else { %>
             <p class='text-muted'>No feedback to show.</p>
         <% }
