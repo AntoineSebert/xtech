@@ -7,7 +7,9 @@
     <% if (typeof feedbacks != 'undefined') {
     	if (0 < feedbacks.length) { %>
             <ol class="list-group overflow-auto">
-                <% feedbacks.forEach(function(f) { %>
+                <% feedbacks
+                        .sort((a, b) => (b.delivery + b.temperature) - (a.delivery + a.temperature))
+                        .forEach(function(f) { %>
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold"><%= f.location %></div>
