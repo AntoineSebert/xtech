@@ -5,5 +5,4 @@ before 04-21:
 - [ ] dashboard section visible on focus ? so dashboard#section starts with section showed
 - [ ] make error list a partial
 - [ ] deleting ingredients -> confirmation popup
-- [ ] space add ingredient / table
 
