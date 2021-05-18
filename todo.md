@@ -4,8 +4,6 @@ before 04-21:
 - [ ] feedback check if at least one is checkbox is ticked
 - [ ] dashboard section visible on focus ? so dashboard#section starts with section showed
 - [ ] make error list a partial
-- [ ] scroll in policies
-- [ ] kitchen order in policies by total number of negative feedbacks
 - [ ] deleting ingredients -> confirmation popup
 - [ ] space add ingredient / table
 

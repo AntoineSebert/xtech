@@ -11,7 +11,6 @@ exports.get_dashboard = async function(req, res) {
                     (SELECT COUNT(*) from new_feedback where kitchen = kitchens.location and delivery)    as delivery,
                     (SELECT COUNT(*) from new_feedback where kitchen = kitchens.location and temperature) as temperature
              FROM kitchens
-             order by temperature desc, delivery desc
              limit 50
 		`);
 		const ingredients = await db.query("select * from ingredients order by name");
