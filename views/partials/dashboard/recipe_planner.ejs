@@ -1,69 +1,74 @@
+<script src="scripts/recipe_planner.js" type="application/javascript"></script>
+
 <section id='recipe-planner' class='d-none'>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Recipe Planner</h1>
+
+    <div class="container">
+        <h2>RECIPIE PLANNER</h2>
+
+        <ul class="nav nav-tabs">
+            <li><a data-toggle="tab" href="#visual-data">Recipes</a></li>
+            <li><a data-toggle="tab" href="#create-data">Add Recipes</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="home" class="tab-pane fade in active">
+                <p>Here you will be able to visualize, create and delete recipes</p>
+            </div>
+
+            <div id="visual-data" class="tab-pane fade">
+
+                <h3>Recipe Visualizator</h3>
+
+                <div class="container" style="width:600px;">
+                    <br /><br />
+                    Kitchen-location: <select name="kitchen" id="kitchen-location" class="form-control input-lg">
+                        <option value="">Select kitchen</option>
+                    </select>
+                    <br />
+                    Recipes: <select MULTIPLE name="recipe" id="recipe" class="form-control input-lg">
+                        <option value="">Please select kitchen first</option>
+                    </select>
+                    <br />
+                    Ingredients: <select name="ingredients" id="ingredients" class="form-control input-lg">
+                        <option value="">Please select recipe first</option>
+                    </select>
+                    <br />
+
+                    <input type=button id="btn" value='Remove Selected Recipe'>
+
+                </div>
+
+
+            </div>
+
+            <div id="create-data" class="tab-pane fade">
+                <h3>Create Recipe</h3>
+                <br>
+                <form method="POST">
+                    <label for="name">Recipe:</label>
+                    <input type="text" placeholder="New of the new recipe" autocomplete="off">
+
+                    <label for="name">Ingredients:</label>
+                    <input type="text" id="name" placeholder="Enter the ingredients" autocomplete="off">
+                    <button id="btnAdd">Add to list</button>
+
+                    <br /> <br />
+                    <label for="list">Ingredients List:</label>
+                    <br />
+
+                    <select class="form-control" id="list" name="list" multiple>
+                    </select>
+
+                    <br />
+                    <button type="submit" id="btnRemove">Remove Selected Framework</button>
+                    <button type="submit">Add</button>
+                </form>
+            </div>
+        </div>
     </div>
-    <!--
-    kitchen (location)
-    recipe
-    ingredients
-
-    category :
-        - non-compliant
-		- young children : 450cal + 12gr proteins
-		- older children : 700cal + 20gr proteins
-    -->
-    <div class="container" style="width:600px;">
-        <br /><br />
-        Kitchen-location: <select name="kitchen" id="kitchen-location" class="form-control input-lg">
-            <option value="">Select kitchen</option>
-        </select>
-        <br />
-        Recipes: <select name="recipe" id="recipe" class="form-control input-lg">
-            <option value="">Please select kitchen first</option>
-        </select>
-        <br />
-        Ingredients: <select name="ingredients" id="ingredients" class="form-control input-lg">
-            <option value="">Please select recipe first</option>
-        </select>
-    </div>
-
-    <script>
-		var subjectObject = {
-			"Ahmedabad": {
-				"recipie 1": ["beet root", "coconut water", "ricebean"],
-				"recipie 2": ["egg", "poultry", "omlet"],
-			},
-			"Ajmer": {
-				"recipe 3": ["chicken", "poultry", "wing", "skinless"],
-				"recipe 4": ["radish", "elongate", "white skin"],
-			}
-		}
-		window.onload = function() {
-			var kitchenSel = document.getElementById("kitchen-location");
-			var recipeSel = document.getElementById("recipe");
-			var ingredientSel = document.getElementById("ingredients");
-			for (var x in subjectObject) {
-				kitchenSel.options[kitchenSel.options.length] = new Option(x, x);
-			}
-			kitchenSel.onchange = function() {
-				//empty recipie- and ingredients- dropdowns
-				ingredientSel.length = 1;
-				recipeSel.length = 1;
-				//display correct values
-				for (var y in subjectObject[this.value]) {
-					recipeSel.options[recipeSel.options.length] = new Option(y, y);
-				}
-			}
-			recipeSel.onchange = function() {
-				//empty ingredients dropdown
-				ingredientSel.length = 1;
-				//display correct values
-				var z = subjectObject[kitchenSel.value][this.value];
-				for (var i = 0; i < z.length; i++) {
-					ingredientSel.options[ingredientSel.options.length] = new Option(z[i], z[i]);
-				}
-			}
-		}
-    </script>
-
 </section>
+
+
+
+
