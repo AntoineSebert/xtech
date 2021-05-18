@@ -15,11 +15,35 @@
                     <use xlink:href="img/bootstrap-icons.svg#pencil-square"/>
                 </svg>
             </button>
-            <button type="button" class="btn btn-sm btn-outline-danger mx-2" onclick='deleteIngredients()'>
+            <!--onclick='deleteIngredients()'-->
+            <button
+                    type="button"
+                    class="btn btn-sm btn-outline-danger mx-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmationModal">
                 <svg class="bi d-block mx-auto" width="20" height="20" fill="currentColor">
                     <use xlink:href="img/bootstrap-icons.svg#trash"/>
                 </svg>
             </button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>The data will be removed</p>
+                    <p>Do you want to proceed ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick='deleteIngredients()'>Delete</button>
+                </div>
+            </div>
         </div>
     </div>
 
