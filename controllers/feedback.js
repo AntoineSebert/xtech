@@ -12,9 +12,8 @@ exports.post_feedback = [
 		.isLength({ min: 1, max: 255 })
 		.withMessage('Kitchen empty.')
 		.escape(),
-	//check if at least one is checkbox is ticked
-	body('temperature'),
-	body('delivery'),
+	body('temperature').toBoolean(),
+	body('delivery').toBoolean(),
 	body('comment')
 		.trim()
 		.escape(),
@@ -30,58 +29,47 @@ exports.post_feedback = [
 		[req.oidc.user.email])
 			.then(result => {
 				if(result.rows.length > 0)
-					errors.push(
-						{ msg : "You already sent feedback less than one hour ago, at: " + result.rows[0].time}
-					);
+					errors.push("You already sent feedback less than one hour ago, at: " + result.rows[0].time);
 			})
 			.catch(err => {
 				console.error(err.stack);
 				errors.push(err.detail);
 			});
 
-		const validationErrors = validationResult(req);
+		if(errors.length === 0) {
+			if(!req.body.delivery && !req.body.temperature)
+				errors.push("At least one of the proposed issues (temperature or delivery) must be reported.");
 
-		if(!validationErrors.isEmpty())
-			errors.concat(validationErrors.array());
+			if(errors.length === 0) {
+				const validationErrors = validationResult(req);
 
-		if(errors.length === 0)
-			query(
-				`INSERT INTO feedback(id, time, comment, kitchen, delivery, temperature, email, location)
-				VALUES(
-					DEFAULT,
-					DEFAULT,
-				    $1,
-			        $2,
-			        $3,
-				    $4,
-				    $5,
-				    $6
-				)`,
-				[
-					req.body.comment,
-					req.body.kitchen,
-					typeof req.body.delivery != 'undefined' && req.body.delivery,
-					typeof req.body.temperature != 'undefined' && req.body.temperature,
-					req.oidc.user.email,
-					req.body.location
-				]
-			)
-				.then(() => res.redirect("/dashboard#feedback")) // add success operation
-				.catch(err => {
-					console.error(err.stack);
-					res.render(
-						"pages/dashboard",
-						{
-							isAuth: req.oidc.isAuthenticated(),
-							user: req.oidc.user,
-							errors: [{ msg : err_msg}]
-						}
-					);
-				});
-		else
-			res.render(
-				"pages/dashboard",
-				{ isAuth: req.oidc.isAuthenticated(), user: req.oidc.user, errors: errors }
-			);
+				if(!validationErrors.isEmpty())
+					for (const err in validationErrors.array())
+						errors.concat(err.msg);
+
+				if(errors.length === 0)
+					query(
+						`INSERT INTO feedback(id, time, comment, kitchen, delivery, temperature, email, location)
+							VALUES(DEFAULT, DEFAULT, $1, $2, $3, $4, $5, $6)`,
+						[
+							req.body.comment,
+							req.body.kitchen,
+							req.body.delivery,
+							req.body.temperature,
+							req.oidc.user.email,
+							req.body.location
+						]
+					)
+						.then(() => res.redirect("/dashboard#feedback")) // add success operation
+						.catch(err => {
+							console.error(err.stack);
+							errors.concat(err.detail);
+						});
+			}
+		}
+
+		res.render(
+			"pages/dashboard", { isAuth: req.oidc.isAuthenticated(), user: req.oidc.user, errors: errors }
+		);
 	}
 ];
