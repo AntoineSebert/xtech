@@ -3,7 +3,6 @@
 <head>
     <title>Contact Us | Demeter</title>
     <meta name="description" content="Do you see an opportunity in working with us ? Can our product fit your organization's needs ? Send us a message let's figure it out !">
-
     <%- include ("../partials/header.ejs") %>
 </head>
 
@@ -23,13 +22,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="md-form mb-2">
-                                    <input type="text" name="name" class="text-white form-control" placeholder="Your name">
+                                    <input type="text" name="name" class="text-black form-control" placeholder="Your name">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="md-form mb-2">
-                                    <input type="text" name="email" class="text-white form-control" placeholder="Your email" required>
+                                    <input type="text" name="email" class="text-black form-control" placeholder="Your email" required="">
                                 </div>
                             </div>
                         </div>
@@ -37,7 +36,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="md-form mb-2">
-                                    <input type="text" name="subject" class="text-white form-control" placeholder="Subject">
+                                    <input type="text" name="subject" class="text-black form-control" placeholder="Subject">
                                 </div>
                             </div>
                         </div>
@@ -45,20 +44,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="md-form mb-2">
-                                    <textarea type="text" name="message" rows="3" class=
-                                    "text-white form-control md-textarea" placeholder="Message" required></textarea>
+                                    <textarea type="text" name="message" rows="3" class="text-black form-control md-textarea" placeholder="Message" required=""></textarea>
                                 </div>
                             </div>
                         </div>
 
                         <div class="text-center text-md-left">
-                            <button class="btn btn-primary" type="submit">Send</button>
+                            <button class="btn btn-primary  " type="submit">Send</button>
                         </div>
                     </form>
                 </div>
             </div>
         </section>
-    </div>
 
     <%- include ("../partials/footer.ejs") %>
 </body>
