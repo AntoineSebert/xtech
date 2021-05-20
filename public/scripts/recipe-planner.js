@@ -168,3 +168,7 @@ function getRecipes() {
 		}
 	};
 }
+
+function addIngredientFieldToList() {
+
+}

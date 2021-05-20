@@ -76,6 +76,88 @@
             <div class="accordion" id="recipesAccordion"></div>
         </div>
         <div class="tab-pane fade" id="calculator" role="tabpanel" aria-labelledby="calculator-tab">
+            <div class="container-fluid mt-5">
+                <div class='row'>
+                    <div class='col-sm-6'>
+                        <form method='POST' action='/recipe/add'>
+                            <div class="mb-3">
+                                <label for="recipe_kitchen" class="form-label">Kitchen</label>
+                                <select class="form-select" aria-label="Kitchen" id='recipe_kitchen' required>
+                                    <option selected>Select your kitchen</option>
+                                    <% if (typeof kitchens != 'undefined') {
+                                    kitchens.rows.forEach(function(k) { %>
+                                        <option value="<%= k.location %>"><%= k.location %></option>
+                                    <% });
+                                    } %>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipe_name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="recipe_name" required>
+                            </div>
+                            <fieldset>
+                                <legend>Ingredients list</legend>
+                                <div class="input-group mb-3">
+                                    <select class="form-select" id="ingredient" aria-label="Ingredient name">
+                                        <option selected>Choose...</option>
+                                        <% if (typeof ingredients != 'undefined') {
+                                        ingredients.rows.forEach(function(i) { %>
+                                            <option value="<%= i.name %>"><%= i.name %></option>
+                                        <% });
+                                        } %>
+                                    </select>
+                                    <input type="number" aria-label="Last name" class="form-control">
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick='addIngredientFieldToList()'>+</button>
+                            </fieldset>
+
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+                    <div class='col-sm-6'>
+                        <!--
+                        category :
+                            - non-compliant
+                            - young children : 450cal + 12gr proteins
+                            - older children : 700cal + 20gr proteins
+                        -->
+                        <h4>Energy</h4>
+                        <p>Young children</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">25%</div>
+                        </div>
+                        <p>Older children</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">25%</div>
+                        </div>
+
+                        <h4>Protein</h4>
+                        <p>Young children</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">25%</div>
+                        </div>
+                        <p>Older children</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">25%</div>
+                        </div>
+
+                        <h5>Water</h5>
+                        <p id='water'>0</p>
+
+                        <h5>Ash</h5>
+                        <p id='ash'>0</p>
+
+                        <h5>Fat</h5>
+                        <p id='fat'>0</p>
+
+                        <h5>Carbs</h5>
+                        <p id='carbs'>0</p>
+
+                        <h5>Cost</h5>
+                        <p id='cost'>0</p>
+                    </div>
+                </div>
+            </div>
             <div class="container">
                 <h2>RECIPIE PLANNER</h2>
 
