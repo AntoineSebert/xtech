@@ -2,14 +2,25 @@ const { query, pool } = require('../db');
 const { body, validationResult } = require('express-validator');
 
 module.exports = {
-	getRecipes: async (req, res) => {
-		query(`SELECT * FROM recipes GROUP BY kitchen`)
-			.then(result => res.json({'recipes': result.rows}))
-			.catch(err => {
-				console.error(err.stack);
-				res.status(400).json({'errors': err.detail});
-			});
-	},
+	getRecipes: [
+		body('kitchen').trim().isLength({ min: 1, max: 255 }).escape(),
+		async (req, res) => {
+			const validationErrors = validationResult(req);
+
+			if(validationErrors.isEmpty())
+				query(`SELECT name, ingredient, quantity
+                       FROM recipes
+                                INNER JOIN recipe_entries recipe ON recipes.name = recipe.recipe_name
+                       WHERE kitchen = $1 group by name, ingredient, quantity`, [req.body.kitchen])
+					.then(result => res.json({'recipes': result.rows}))
+					.catch(err => {
+						console.error(err.stack);
+						res.status(400).json({'errors': [err.detail]});
+					});
+			else
+				res.status(400).json({'errors': validationErrors.array()});
+		}
+	],
 	addRecipe: [
 		body('name').trim().isLength({ min: 1, max: 255 }).escape(),
 		body('kitchen').trim().isLength({ min: 1, max: 255 }).escape(),

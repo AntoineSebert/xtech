@@ -1,69 +1,145 @@
-<script src="scripts/recipe_planner.js" type="application/javascript"></script>
+<script async defer src='scripts/recipe-planner.js' type='application/javascript'></script>
+
+<template id='accordion-item'>
+    <div class="accordion-item">
+        <!--change id-->
+        <h2 class="accordion-header" id="recipe-title">
+            <!--change data-bs-target and aria-controls -->
+            <button class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#recipe-detail"
+                    aria-expanded="false"
+                    aria-controls="recipe-detail">Recipe Name</button>
+        </h2>
+        <!--change id-->
+        <!-- aria-labelledby match title id-->
+        <div id='recipe-detail'
+             class="accordion-collapse collapse"
+             aria-labelledby="recipe-title"
+             data-bs-parent="#recipesAccordion">
+            <!--change table-->
+            <div class="accordion-body">
+                <ul class="list-group list-group-flush"></ul>
+            </div>
+        </div>
+    </div>
+</template>
 
 <section id='recipe-planner' class='d-none'>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Recipe Planner & Calculator</h1>
+    </div>
 
-    <div class="container">
-        <h2>RECIPIE PLANNER</h2>
+    <div id='alerts'></div>
 
-        <ul class="nav nav-tabs">
-            <li><a data-toggle="tab" href="#visual-data">Recipes</a></li>
-            <li><a data-toggle="tab" href="#create-data">Add Recipes</a></li>
-        </ul>
-
-        <div class="tab-content">
-
-            <div id="home" class="tab-pane fade in active">
-                <p>Here you will be able to visualize, create and delete recipes</p>
-            </div>
-
-            <div id="visual-data" class="tab-pane fade">
-
-                <h3>Recipe Visualizator</h3>
-
-                <div class="container" style="width:600px;">
-                    <br /><br />
-                    Kitchen-location: <select name="kitchen" id="kitchen-location" class="form-control input-lg">
-                        <option value="">Select kitchen</option>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active"
+                    id="see_recipes-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#see_recipes"
+                    type="button"
+                    role="tab"
+                    aria-controls="see_recipes"
+                    aria-selected="true">See recipes</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link"
+                    id="calculator-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#calculator"
+                    type="button"
+                    role="tab"
+                    aria-controls="profile"
+                    aria-selected="false">Calculator</button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="see_recipes" role="tabpanel" aria-labelledby="see_recipes-tab">
+            <form class='mt-5'>
+                <div class="input-group mb-3">
+                    <select class="form-select" aria-label="Default select example" id='kitchen_select'>
+                        <option selected>Select your kitchen</option>
+                        <% if (typeof kitchens != 'undefined') {
+                        kitchens.rows.forEach(function(k) { %>
+                            <option value="<%= k.location %>"><%= k.location %></option>
+                        <% });
+                        } %>
                     </select>
-                    <br />
-                    Recipes: <select MULTIPLE name="recipe" id="recipe" class="form-control input-lg">
-                        <option value="">Please select kitchen first</option>
-                    </select>
-                    <br />
-                    Ingredients: <select name="ingredients" id="ingredients" class="form-control input-lg">
-                        <option value="">Please select recipe first</option>
-                    </select>
-                    <br />
-
-                    <input type=button id="btn" value='Remove Selected Recipe'>
-
+                    <button class="btn btn-outline-primary"
+                            type="button"
+                            id="button-addon"
+                            onclick='getRecipes()'>Get recipes</button>
                 </div>
+            </form>
+            <div class="accordion" id="recipesAccordion"></div>
+        </div>
+        <div class="tab-pane fade" id="calculator" role="tabpanel" aria-labelledby="calculator-tab">
+            <div class="container">
+                <h2>RECIPIE PLANNER</h2>
+
+                <ul class="nav nav-tabs">
+                    <li><a data-toggle="tab" href="#visual-data">Recipes</a></li>
+                    <li><a data-toggle="tab" href="#create-data">Add Recipes</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div id="home" class="tab-pane fade in active">
+                        <p>Here you will be able to visualize, create and delete recipes</p>
+                    </div>
+
+                    <div id="visual-data" class="tab-pane fade">
+
+                        <h3>Recipe Visualizator</h3>
+
+                        <div class="container" style="width:600px;">
+                            <br /><br />
+                            Kitchen-location: <select name="kitchen" id="kitchen-location" class="form-control input-lg">
+                                <option value="">Select kitchen</option>
+                            </select>
+                            <br />
+                            Recipes: <select MULTIPLE name="recipe" id="recipe" class="form-control input-lg">
+                                <option value="">Please select kitchen first</option>
+                            </select>
+                            <br />
+                            Ingredients: <select name="ingredients" id="ingredients" class="form-control input-lg">
+                                <option value="">Please select recipe first</option>
+                            </select>
+                            <br />
+
+                            <input type=button id="btn" value='Remove Selected Recipe'>
+
+                        </div>
 
 
-            </div>
+                    </div>
 
-            <div id="create-data" class="tab-pane fade">
-                <h3>Create Recipe</h3>
-                <br>
-                <form method="POST">
-                    <label for="name">Recipe:</label>
-                    <input type="text" placeholder="New of the new recipe" autocomplete="off">
+                    <div id="create-data" class="tab-pane fade">
+                        <h3>Create Recipe</h3>
+                        <br>
+                        <form method="POST">
+                            <label for="name">Recipe:</label>
+                            <input type="text" placeholder="New of the new recipe" autocomplete="off">
 
-                    <label for="name">Ingredients:</label>
-                    <input type="text" id="name" placeholder="Enter the ingredients" autocomplete="off">
-                    <button id="btnAdd">Add to list</button>
+                            <label for="name">Ingredients:</label>
+                            <input type="text" id="name" placeholder="Enter the ingredients" autocomplete="off">
+                            <button id="btnAdd">Add to list</button>
 
-                    <br /> <br />
-                    <label for="list">Ingredients List:</label>
-                    <br />
+                            <br /> <br />
+                            <label for="list">Ingredients List:</label>
+                            <br />
 
-                    <select class="form-control" id="list" name="list" multiple>
-                    </select>
+                            <select class="form-control" id="list" name="list" multiple>
+                            </select>
 
-                    <br />
-                    <button type="submit" id="btnRemove">Remove Selected Framework</button>
-                    <button type="submit">Add</button>
-                </form>
+                            <br />
+                            <button type="submit" id="btnRemove">Remove Selected Framework</button>
+                            <button type="submit">Add</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
