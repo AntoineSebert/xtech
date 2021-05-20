@@ -98,7 +98,7 @@
                         <form method='POST' action='/recipe/add'>
                             <div class="mb-3">
                                 <label for="recipe_kitchen" class="form-label">Kitchen</label>
-                                <select class="form-select" aria-label="Kitchen" id='recipe_kitchen' required>
+                                <select name='kitchen' class="form-select" aria-label="Kitchen" id='recipe_kitchen' required>
                                     <option selected>Select your kitchen</option>
                                     <% if (typeof kitchens != 'undefined') {
                                     kitchens.rows.forEach(function(k) { %>
@@ -109,7 +109,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="recipe_name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="recipe_name" required>
+                                <input name='recipe_name' type="text" class="form-control" id="recipe_name" required>
                             </div>
                             <fieldset>
                                 <legend>Ingredients list</legend>

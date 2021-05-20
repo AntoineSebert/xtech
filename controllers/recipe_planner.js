@@ -22,7 +22,7 @@ module.exports = {
 		}
 	],
 	addRecipe: [
-		body('name').trim().isLength({ min: 1, max: 255 }).escape(),
+		body('recipe_name').trim().isLength({ min: 1, max: 255 }).escape(),
 		body('kitchen').trim().isLength({ min: 1, max: 255 }).escape(),
 		body('recipe').custom(value => value.forEach((key, val) =>
 			key.isAlpha().trim().isLength({ min: 1, max: 64 }).toLowerCase().escape()
@@ -30,6 +30,8 @@ module.exports = {
 		)),
 		async (req, res) => {
 			const validationErrors = validationResult(req);
+
+			console.log("data :" + req.body); // CHECK IS DONE HERE
 
 			if(validationErrors.isEmpty()) {
 				const client = await pool.connect();
