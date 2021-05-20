@@ -80,7 +80,7 @@ const router = express.Router()
 	.get("/ingredients", requiresAuth(), getIngredients)
 	.post("/recipe/add", requiresAuth(), addRecipe)
 	.post("/recipe/delete", requiresAuth(), deleteRecipes)
-	.get("/recipe", requiresAuth(), getRecipes)
+	.post("/recipes", requiresAuth(), getRecipes)
 	.get("/dashboard", requiresAuth(), dashboard.get_dashboard);
 
 app.use(router);
