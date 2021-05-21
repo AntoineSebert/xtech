@@ -20,8 +20,6 @@ module.exports = {
 				ingredientsComments.rows.map(r => [r['column_name'], r['description']])
 			);
 
-			console.log("here");
-
 			res.json({'ingredients': ingredients});
 		} catch(err) {
 			console.error(err.stack);
