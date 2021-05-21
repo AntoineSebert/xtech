@@ -9,5 +9,6 @@ const pool = new Pool({
 module.exports = {
 	query: (text, params) => pool.query(text, params),
 	pool: () => pool,
+	connect: () => pool.connect(),
 	err_msg: "An error occurred while retrieving the data from the database",
 };
