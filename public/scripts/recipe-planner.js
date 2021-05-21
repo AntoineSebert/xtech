@@ -57,7 +57,6 @@ function getRecipes() {
 							let list = detail.querySelector("ul");
 
 							for(const entry of val) {
-								console.log(entry);
 								let item = document.createElement("li");
 								item.classList.add("list-group-item");
 								item.textContent = entry.ingredient + ' : ' + entry.quantity;
@@ -97,4 +96,73 @@ function addIngredientFieldToList() {
 function removeIngredient(button) {
 	const item = button.parentNode;
 	item.parentNode.removeChild(item);
+	updateNutritional();
+}
+
+function updateNutritional() {
+	const entries = document.getElementById('recipe_ingredients')
+		.querySelectorAll('.recipe-ingredient');
+
+	let filteredEntries = new Map();
+
+	for (const entry of entries) {
+		let nameField = entry.querySelector("select");
+		let quantityField = entry.querySelector("input");
+
+		if(nameField.checkValidity() && nameField.value.length !== 0
+			&& quantityField.checkValidity() && quantityField.value.length !== 0) {
+			filteredEntries.set(nameField.value, quantityField.valueAsNumber);
+		}
+	}
+
+	let energy = 0.0, protein = 0.0, water = 0.0, ash = 0.0, fat = 0.0, carbs = 0.0, cost = 0.0;
+
+	for (const [key, val] of filteredEntries) {
+		const ratio = val / 100;
+
+		energy += ratio * ingredientsData.get(key).energy;
+		protein += ratio * ingredientsData.get(key).protein;
+		water += ratio * ingredientsData.get(key).water;
+		ash += ratio * ingredientsData.get(key).ash;
+		fat += ratio * ingredientsData.get(key).fat;
+		carbs += ratio * ingredientsData.get(key).carbs;
+		cost += ratio * Number(ingredientsData.get(key).cost.replace(/[^0-9.-]+/g,""));
+	}
+
+	/*
+    category :
+	    - non-compliant
+	    - young children : 450cal + 12gr proteins
+	    - older children : 700cal + 20gr proteins
+	 */
+
+	let energyYoung = document.getElementById("energy-young");
+	energyYoung.textContent = String(parseInt(energy)) + ' kcal';
+	energyYoung.setAttribute("aria-valuenow", String(parseInt(energy)));
+	const energyPercentYoung = (100 / 450) * energy;
+	energyYoung.style = "width: " + (energyPercentYoung < 100 ? energyPercentYoung : 100) + "%;";
+
+	let energyOld = document.getElementById("energy-old");
+	energyOld.textContent = String(parseInt(energy)) + ' kcal';
+	energyOld.setAttribute("aria-valuenow", String(parseInt(energy)));
+	const energyPercentOld = (100 / 700) * energy;
+	energyOld.style = "width: " + (energyPercentOld < 100 ? energyPercentOld : 100) + "%;";
+
+	let proteinYoung = document.getElementById("protein-young");
+	proteinYoung.textContent = String(parseInt(protein)) + ' gr';
+	proteinYoung.setAttribute("aria-valuenow", String(parseInt(protein)));
+	const proteinPercentYoung = (100 / 12) * protein;
+	proteinYoung.style = "width: " + (proteinPercentYoung < 100 ? proteinPercentYoung : 100) + "%;";
+
+	let proteinOld = document.getElementById("protein-old");
+	proteinOld.textContent = String(parseInt(protein)) + ' gr';
+	proteinOld.setAttribute("aria-valuenow", String(parseInt(protein)));
+	const proteinPercentOld = (100 / 20) * protein;
+	proteinOld.style = "width: " + (proteinPercentOld < 100 ? proteinPercentOld : 100) + "%;";
+
+	document.getElementById("recipe-water").textContent = String(water);
+	document.getElementById("recipe-ash").textContent = String(ash);
+	document.getElementById("recipe-fat").textContent = String(fat);
+	document.getElementById("recipe-carbs").textContent = String(carbs);
+	document.getElementById("recipe-cost").textContent = String(cost);
 }

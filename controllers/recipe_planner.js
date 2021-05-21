@@ -1,4 +1,4 @@
-const { query, pool } = require('../db');
+const { query, connect } = require('../db');
 const { body, validationResult } = require('express-validator');
 
 module.exports = {
@@ -24,35 +24,35 @@ module.exports = {
 	addRecipe: [
 		body('recipe_name').trim().isLength({ min: 1, max: 255 }).escape(),
 		body('kitchen').trim().isLength({ min: 1, max: 255 }).escape(),
+		/*
 		body('recipe').custom(value => value.forEach((key, val) =>
 			key.isAlpha().trim().isLength({ min: 1, max: 64 }).toLowerCase().escape()
 			&& (val.isInt({ gt: 0}) || val.isFloat({ gt: 0.0}))
 		)),
+		 */
 		async (req, res) => {
 			const validationErrors = validationResult(req);
 
-			console.log("data :" + req.body); // CHECK IS DONE HERE
-
 			if(validationErrors.isEmpty()) {
-				const client = await pool.connect();
+				const client = await connect();
 
 				try {
 					await client.query('BEGIN');
 
-					const name = req.body.name.toLowerCase();
+					const name = req.body.recipe_name; // to lower case
 
 					await client.query(
-						`INSERT INTO recipes (kitchen, name) VALUES ('$1', '$2')`,
-						[name, req.body.kitchen]
+						`INSERT INTO recipes (kitchen, name) VALUES ($1, $2)`,
+						[req.body.kitchen, name]
 					);
 
 					await Promise.all(req.body.recipe.map(e => client.query(
-						`INSERT INTO recipe_entries (recipe_name, quantity, ingredient) VALUES ('$1', $2, '$3')`,
-						[name, e[1], e[0]]
+						`INSERT INTO recipe_entries (recipe_name, quantity, ingredient) VALUES ($1, $2, $3)`,
+						[name, e.quantity, e.name]
 					)));
 
 					await client.query('COMMIT');
-					res.status(200);
+					res.redirect("/dashboard#recipe");
 				} catch (e) {
 					await client.query('ROLLBACK');
 					res.status(400).json({'errors': [e.detail]});
